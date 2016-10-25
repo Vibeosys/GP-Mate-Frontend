@@ -1,0 +1,45 @@
+{
+  "project_info": {
+    "project_number": "981104220064",
+    "firebase_url": "https://project-3095679286531525397.firebaseio.com",
+    "project_id": "project-3095679286531525397",
+    "storage_bucket": "project-3095679286531525397.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981104220064:android:d602d8cf4d3154f8",
+        "android_client_info": {
+          "package_name": "com.consultpal.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "981104220064-geevk7cpsqdef3qf66tlp9k1rs5o6d5l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP0P_JdfA__5_VwWUoK5QFJnwEeFIGmtE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-69998168-3"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,22 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="log_in_logo_vertical_margin">10dp</dimen>
+    <dimen name="log_in_form_vertical_padding">15dp</dimen>
+    <dimen name="log_in_fields_bottom_margin">15dp</dimen>
+    <dimen name="log_in_last_field_bottom_margin">20dp</dimen>
+
+    <dimen name="welcome_top_padding">30dp</dimen>
+    <dimen name="welcome_text_size">14sp</dimen>
+    <dimen name="welcome_image_size">100dp</dimen>
+
+    <dimen name="session_top_picture_vertical_margin">16dp</dimen>
+    <dimen name="session_top_picture_size">80dp</dimen>
+    <dimen name="session_top_text_size">14sp</dimen>
+    <dimen name="session_bottom_buttons_text_size">16sp</dimen>
+
+    <dimen name="symptom_box_height">80dp</dimen>
+    <dimen name="symptom_box_text_size">14sp</dimen>
+</resources>

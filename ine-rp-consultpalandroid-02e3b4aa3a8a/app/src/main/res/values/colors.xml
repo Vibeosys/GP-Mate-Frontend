@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FE0000</color>
+    <color name="colorPrimaryDark">#cb0000</color>
+    <color name="colorAccent">#FE0000</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="grey_regular_text">#757575</color>
+
+    <!-- Symptoms -->
+    <color name="border_box_1">#B70F0A</color>
+    <color name="border_box_2">#FFBF00</color>
+    <color name="border_box_3">#629C44</color>
+    <color name="border_box_4">#A8C6FA</color>
+    <color name="border_box_5">#efcc3a</color>
+    <color name="border_box_6">#7E2199</color>
+    <color name="border_box_7">#00ced1</color>
+    <color name="border_box_8">#8d663b</color>
+
+    <color name="continue_button_dark">#446D2F</color>
+
+</resources>

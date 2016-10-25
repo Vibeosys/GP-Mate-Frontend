@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:isScrollContainer="false"
+        android:layout_above="@+id/symptom_edit_bottom_layout">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/symptom_edit_title"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:paddingBottom="20dp"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:cardUseCompatPadding="true">
+
+                    <EditText
+                        android:id="@+id/symptom_edit_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:maxLength="200"
+                        android:padding="10dp"
+                        android:textSize="15sp"
+                        android:gravity="top"
+                        android:textColor="@color/black"
+                        android:hint="@string/symptom_description_hint"/>
+
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:text="Optional: "
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:text="@string/symptom_question_1_title"/>
+
+                <EditText
+                    android:id="@+id/symptom_question_1_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:maxLength="100"
+                    android:textColor="@color/black"
+                    android:hint="@string/symptom_question_1_hint"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:text="@string/symptom_question_2_title"/>
+
+                <RadioGroup
+                    android:id="@+id/symptom_question_2_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:id="@+id/symptom_question_2_positive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/symptom_question_2_yes"/>
+                    <RadioButton
+                        android:id="@+id/symptom_question_2_negative"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/symptom_question_2_no"/>
+                </RadioGroup>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/symptom_edit_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/symptom_edit_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/symptom_edit_cancel"
+            android:textColor="@color/colorAccent"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_toLeftOf="@+id/symptom_edit_save"/>
+
+        <TextView
+            android:id="@+id/symptom_edit_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/symptom_edit_save"
+            android:paddingLeft="15dp"
+            android:paddingRight="30dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textColor="@color/colorAccent"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/symptom_edit_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:text="@string/symptom_edit_clear"
+            android:textColor="@color/colorAccent"
+            android:layout_alignParentLeft="true"/>
+    </RelativeLayout>
+
+</RelativeLayout>
+

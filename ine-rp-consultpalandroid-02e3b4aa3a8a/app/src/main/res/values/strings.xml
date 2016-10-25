@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">ConsultPal</string>
+
+    <string name="log_in_name_hint">Name</string>
+    <string name="log_in_surname_hint">Surname</string>
+    <string name="log_in_dob_hint">Date of Birth</string>
+    <string name="log_in_email_hint">Email (Optional)</string>
+    <string name="log_in_practice_id_hint">Clinic or Practice Postcode</string>
+    <string name="log_in_start">START</string>
+
+    <string name="log_in_validation_empty_name">Name can not be empty</string>
+    <string name="log_in_validation_empty_surname">Surname can not be empty</string>
+    <string name="log_in_validation_empty_dob">Date of Birth can not be empty</string>
+    <string name="log_in_validation_invalid_email">Please enter a valid email</string>
+    <string name="log_in_validation_empty_practice_id">Practice ID can not be empty</string>
+    <string name="log_in_validation_error">Error logging in</string>
+    <string name="log_in_validation_null_fcm_id">Error generating FCM ID. Please check your internet connection and try again</string>
+    <string name="log_in_validation_dialog_subtitle">Please check your information and try again.</string>
+    <string name="log_in_validation_invalid_practice_id">Please enter a valid Practice ID</string>
+
+    <string name="welcome_practice_place_name">Welcome to %1$s</string>
+    <string name="welcome_consent_text">If you press CONTINUE you are consenting to share your information in accordance with the Consult Pal Terms and Conditions (comprising of End User License Agreement and Privacy Policy). If you do not wish to consent please press EXIT.\n\n Do not use this app in case of emergency or as a substitute for immediate medical assistance.</string>
+    <string name="welcome_continue_button">CONTINUE</string>
+    <string name="welcome_exit_button">EXIT</string>
+
+    <string name="session_top_message_practice">Please use the boxes below to tell us how you are feeling and what you would like to discuss. We are interested in your physical and mental wellbeing.</string>
+    <string name="session_top_message_doctor">Hi, I’m %1$s. Please use the boxes below to tell me how you are feeling and what you would like to discuss. I am interested in your physical and mental wellbeing.</string>
+    <string name="session_symptom_list_first_hint">Tap here to share</string>
+    <string name="session_symptom_list_others_hint">Tap here to share (Optional)</string>
+    <string name="session_messages_button">Messages</string>
+    <string name="session_finish_button">Finish</string>
+    <string name="session_help_button">Help</string>
+    <string name="help_dialog_title">Help</string>
+    <string name="messages_dialog_title">Messages</string>
+
+    <string name="symptom_edit_title">Please share your health concerns</string>
+    <string name="symptom_description_hint">Type here</string>
+    <string name="symptom_question_1_title">1) How long have you had this issue:</string>
+    <string name="symptom_question_1_hint">Type length here</string>
+    <string name="symptom_question_2_title">2) Does it affect your daily activities?</string>
+    <string name="symptom_question_2_yes">Yes</string>
+    <string name="symptom_question_2_no">No</string>
+    <string name="symptom_edit_save">OK</string>
+    <string name="symptom_edit_cancel">GO BACK</string>
+    <string name="symptom_edit_clear">CLEAR</string>
+
+    <string name="help_html_content">
+         <![CDATA[
+            <h4 class="p1"><span class="s1"><i>I don\'t know what to write?</i></span></h4>
+<p class="p1"><span class="s1">Please begin with your main health concern. If you have other problems that you would like to discuss, just enter them in the other boxes. </span></p>
+
+<h4 class="p1"><span class="s1"><i>I put the wrong problem in the wrong box.</i></span></h4>
+<p class="p1"><span class="s1">That\’s OK. Just drag the boxes into the order you would like.</span></p>
+
+<h4 class="p1"><span class="s1"><i>Why are the boxes different colours?</i></span></h4>
+<p class="p1"><span class="s1">The box colour denotes the urgency of your health concern. The top box is red, which should indicate your main trouble.</span></p>
+
+<h4 class="p1"><span class="s1"><i>I don\'t think the doctor has time to address my concerns.</i></span></h4>
+<p class="p1"><span class="s1">That may be the case today but it is important your doctor understands you better by becoming aware of these concerns. You may not think they are important but your doctor may be able to advise you on them, refer you to another professional, or ask you to return on another date to discuss them further. </span></p>
+
+<h4 class="p1"><span class="s1"><i>I don\’t have time today to think about my problems and write them here.</i></span></h4>
+<p class="p1"><span class="s1">That\’s OK. We understand your health can be very complicated and may take more time to think about. If you want to, you can use this app at another location, in your own time, to enter your problems. You could even ask someone to help you.</span></p>
+
+<h4 class="p1"><span class="s1"><i>If I share my problems here, will my Doctor be able to see them, and what will they do with them?</i></span></h4>
+<p class="p1"><span class="s1">Yes, your Doctor can view these problems any time, because they are stored on a safe and secure database. Your Doctor can copy these problems to your Electronic Patient Record, so they will be accessible in future to be able to offer you the best treatments based on this history.</span></p>
+        ]]>
+    </string>
+
+
+
+    <string name="finish_text">Thank you. I will see you shortly.</string>
+
+
+</resources>
+

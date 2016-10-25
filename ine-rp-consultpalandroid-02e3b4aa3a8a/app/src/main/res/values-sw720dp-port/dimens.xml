@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Portrait dimens for Nexus 10 tablet -->
+
+<resources>
+    <dimen name="activity_horizontal_margin">64dp</dimen>
+
+    <dimen name="log_in_logo_vertical_margin">100dp</dimen>
+    <dimen name="log_in_fields_bottom_margin">30dp</dimen>
+    <dimen name="log_in_form_vertical_padding">35dp</dimen>
+    <dimen name="log_in_last_field_bottom_margin">50dp</dimen>
+
+    <dimen name="welcome_top_padding">120dp</dimen>
+    <dimen name="welcome_text_size">24sp</dimen>
+    <dimen name="welcome_image_size">200dp</dimen>
+
+    <dimen name="session_top_picture_size">160dp</dimen>
+    <dimen name="session_top_picture_vertical_margin">16dp</dimen>
+    <dimen name="session_top_text_size">26sp</dimen>
+    <dimen name="session_bottom_buttons_text_size">28sp</dimen>
+
+    <dimen name="symptom_box_height">150dp</dimen>
+    <dimen name="symptom_box_text_size">24sp</dimen>
+</resources>
