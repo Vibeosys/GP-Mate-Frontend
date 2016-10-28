@@ -54,6 +54,7 @@
             android:name=".views.LogInActivity"
             android:theme="@style/NoActionBarTheme"
             android:windowSoftInputMode="adjustResize">
+
             <!-- Adjust view when keyboard shows -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,12 +74,17 @@
             android:name=".views.FinishActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity android:name=".views.SplashScreenActivity">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
+        <activity android:name=".views.SelectPrevAppointment"
+            android:theme="@style/NoActionBarTheme"></activity>
     </application>
 
 </manifest>

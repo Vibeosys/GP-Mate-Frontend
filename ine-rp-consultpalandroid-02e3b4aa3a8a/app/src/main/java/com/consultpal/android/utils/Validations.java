@@ -20,6 +20,8 @@ public class Validations {
     public static final String DOB_EMPTY = "VALIDATION_DOB_EMPTY";
     public static final String PRACTICE_ID_EMPTY = "VALIDATION_PRACTICE_ID_EMPTY";
     public static final String FCM_ID_NULL = "VALIDATION_FCM_ID_NULL";
+    private static final String APPOINTMENT_DATE = "APPOINTMENT_DATE_NULL";
+    private static final String APPOINTMENT_TIME = "APPOINTMENT_TIME_NULL";
 
     public static String validateLogInForm(String name, String surname, String dob, String email, String practiceId) {
         if (TextUtils.isEmpty(name)) {
@@ -53,7 +55,7 @@ public class Validations {
     }
 
     public static String getErrorMsg(Context context, String validationResult) {
-        switch(validationResult) {
+        switch (validationResult) {
             case NAME_EMPTY:
                 return context.getString(R.string.log_in_validation_empty_name);
             case SURNAME_EMPTY:
@@ -66,8 +68,23 @@ public class Validations {
                 return context.getString(R.string.log_in_validation_empty_practice_id);
             case FCM_ID_NULL:
                 return context.getString(R.string.log_in_validation_null_fcm_id);
+            case APPOINTMENT_DATE:
+                return context.getString(R.string.prev_appoint_validation_date_empty);
+            case APPOINTMENT_TIME:
+                return context.getString(R.string.prev_appoint_validation_time_empty);
             default:
                 return context.getString(R.string.log_in_validation_error);
         }
+    }
+
+
+    public static String validatePrevAppoint(String date, String time) {
+        if (TextUtils.isEmpty(date)) {
+            return APPOINTMENT_DATE;
+        }
+        if (TextUtils.isEmpty(time)) {
+            return APPOINTMENT_TIME;
+        }
+        return VALIDATION_OK;
     }
 }

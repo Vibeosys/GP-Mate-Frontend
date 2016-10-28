@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F1F1"
+    tools:context=".views.SelectPrevAppointment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <!-- Usar wrap_content cuando tenga los iconos en buen tamano -->
+        <ImageView
+            android:id="@+id/log_in_logo"
+            android:layout_width="250dp"
+            android:layout_height="113dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/log_in_logo_vertical_margin"
+            android:layout_marginTop="@dimen/log_in_logo_vertical_margin"
+            android:src="@drawable/logo_name_company" />
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/log_in_bg_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            app:cardCornerRadius="2dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/log_in_form_vertical_padding"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="@dimen/log_in_form_vertical_padding">
+
+                <Switch
+                    android:id="@+id/prev_appoint_swt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/log_in_fields_bottom_margin"
+                    android:text="@string/prev_appoint_is_taken"
+                    android:textColor="#242424"
+                    android:textSize="@dimen/session_top_text_size" />
+
+                <TextView
+                    android:id="@+id/prev_appoint_txt_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/log_in_fields_bottom_margin"
+                    android:text="@string/prev_appoint_message"
+                    android:textColor="#242424"
+                    android:textSize="@dimen/session_top_text_size" />
+
+                <EditText
+                    android:id="@+id/prev_appoint_date_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/log_in_fields_bottom_margin"
+                    android:focusable="false"
+                    android:hint="@string/prev_appoint_date_hint" />
+
+                <EditText
+                    android:id="@+id/prev_appoint_time_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/log_in_fields_bottom_margin"
+                    android:focusable="false"
+                    android:hint="@string/prev_appoint_time_hint" />
+
+
+                <TextView
+                    android:id="@+id/prev_appoint_next_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/log_in_button_bg"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/prev_appoint_next"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>

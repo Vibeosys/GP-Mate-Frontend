@@ -17,6 +17,7 @@ import com.consultpal.android.ConsultPalApp;
 import com.consultpal.android.R;
 import com.consultpal.android.listeners.DatePickerListener;
 import com.consultpal.android.listeners.PracticeIdSearchListener;
+import com.consultpal.android.listeners.PracticeIdSelectedListener;
 import com.consultpal.android.model.Patient;
 import com.consultpal.android.model.PracticePlace;
 import com.consultpal.android.model.rest.Session;
@@ -75,7 +76,7 @@ public class LogInActivity extends AppCompatActivity {
         practiceIdAutocomplete.setThreshold(2);
         practiceIdAutocomplete.setAdapter(practiceIdsAdapter);
         practiceIdAutocomplete.addTextChangedListener(new PracticeIdSearchListener(this));
-
+        practiceIdAutocomplete.setOnItemClickListener(new PracticeIdSelectedListener(this));
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -162,7 +163,6 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
-    @OnItemClick(R.id.log_in_practice_id_autocomplete)
     public void onPracticeSelected() {
         long practiceId = getIdFromPracticePlaceList();
         if (practiceId >= 0) {

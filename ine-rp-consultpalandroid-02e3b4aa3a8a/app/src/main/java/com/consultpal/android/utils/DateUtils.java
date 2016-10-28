@@ -26,4 +26,24 @@ public class DateUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(date);
     }
+
+    public static String getLocalTimeInReadableFormat(java.util.Date date) {
+        final SimpleDateFormat timeReadFormat = new SimpleDateFormat("hh:mm aa");
+        return timeReadFormat.format(date);
+    }
+
+
+    public static long stringDateTimeToLong(String dateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        Date date;
+        try {
+            date = sdf.parse(dateString);
+            return date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 }

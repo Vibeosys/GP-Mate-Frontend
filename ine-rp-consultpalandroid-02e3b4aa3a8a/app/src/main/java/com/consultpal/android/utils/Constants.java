@@ -5,9 +5,9 @@ package com.consultpal.android.utils;
  */
 public class Constants {
 
-   // public final static String BASE_ENDPOINT= "https://www.consultpal.co.uk/consultpal-manager/api/1.0/";
+    // public final static String BASE_ENDPOINT= "https://www.consultpal.co.uk/consultpal-manager/api/1.0/";
     //public final static String BASE_ENDPOINT_PICTURES = "https://www.consultpal.co.uk/consultpal-manager/";
-    public final static String BASE_ENDPOINT= "http://192.168.1.6:8080/consultpal-manager/api/1.0/";
+    public final static String BASE_ENDPOINT = "http://192.168.1.6:8080/consultpal-manager/api/1.0/";
     public final static String BASE_ENDPOINT_PICTURES = "https://www.consultpal.co.uk/consultpal-manager/";
 
     // Log in
@@ -20,4 +20,7 @@ public class Constants {
     public static final String KEY_SESSION = "KEY_SESSION";
     public static final String KEY_SESSION_SYMPTOMS = "KEY_SESSION_SYMPTOMS";
     public static final String KEY_SESSION_MESSAGES = "KEY_SESSION_MESSAGES";
+
+    //Appointment
+    public static final String APPOINTMENT_DATE_TIME = "DATE_AND_TIME";
 }
