@@ -69,7 +69,13 @@
 
 
     <string name="finish_text">Thank you. I will see you shortly.</string>
-
+    <!--Splash screen message -->
+    <string name="splash_screen_message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Sed lacinia vel dolor at venenatis. Nam aliquet convallis tortor quis egestas.
+        Suspendisse quis efficitur lectus, vel vestibulum libero. Proin non elit gravida,
+        consectetur augue vitae, condimentum mi. Pellentesque interdum lacus nisi,
+        non posuere lectus rutrum et. Mauris euismod diam ut elit euismod imperdiet.
+        Vestibulum sit amet massa eu diam volutpat sagittis.</string>
 
 </resources>
 
