@@ -10,6 +10,7 @@ import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.consultpal.android.ConsultPalApp;
@@ -27,6 +28,7 @@ import com.consultpal.android.utils.Validations;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.iid.FirebaseInstanceId;
+
 import android.app.DatePickerDialog;
 
 import java.io.IOException;
@@ -37,14 +39,22 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 
-public class LogInActivity extends AppCompatActivity { 
+public class LogInActivity extends AppCompatActivity {
 
-    @Bind(R.id.log_in_name_et) EditText nameET;
-    @Bind(R.id.log_in_surname_et) EditText surnameET;
-    @Bind(R.id.log_in_dob_et) EditText dobET;
-    @Bind(R.id.log_in_email_et) EditText emailET;
-    @Bind(R.id.log_in_practice_id_autocomplete) AppCompatAutoCompleteTextView practiceIdAutocomplete;
+    @Bind(R.id.log_in_name_et)
+    EditText nameET;
+    @Bind(R.id.log_in_surname_et)
+    EditText surnameET;
+    @Bind(R.id.log_in_dob_et)
+    EditText dobET;
+    @Bind(R.id.log_in_email_et)
+    EditText emailET;
+    @Bind(R.id.log_in_practice_id_autocomplete)
+    AppCompatAutoCompleteTextView practiceIdAutocomplete;
+    @Bind(R.id.log_in_spn_doctor_list)
+    Spinner spnDoctors;
 
     private LogInPresenter presenter;
     private List<String> practiceIdsList = new ArrayList<>();
@@ -61,7 +71,7 @@ public class LogInActivity extends AppCompatActivity {
         // bind to presenter
         presenter = new LogInPresenter(this);
 
-        practiceIdsAdapter = new ArrayAdapter<>(LogInActivity.this,android.R.layout.select_dialog_item, practiceIdsList);
+        practiceIdsAdapter = new ArrayAdapter<>(LogInActivity.this, android.R.layout.select_dialog_item, practiceIdsList);
         practiceIdAutocomplete.setThreshold(2);
         practiceIdAutocomplete.setAdapter(practiceIdsAdapter);
         practiceIdAutocomplete.addTextChangedListener(new PracticeIdSearchListener(this));
@@ -120,12 +130,10 @@ public class LogInActivity extends AppCompatActivity {
                 new DatePickerListener(dobET),
                 now.get(Calendar.YEAR),
                 now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH))
-        {
+                now.get(Calendar.DAY_OF_MONTH)) {
             // OnCreate added to set background to Transparent, to hide a weird second bg shown with Holo_Dialog
             @Override
-            public void onCreate(Bundle savedInstanceState)
-            {
+            public void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             }
@@ -151,6 +159,16 @@ public class LogInActivity extends AppCompatActivity {
             }
         } else {
             showErrorDialog(Validations.getErrorMsg(this, validationMsg));
+        }
+    }
+
+    @OnItemClick(R.id.log_in_practice_id_autocomplete)
+    public void onPracticeSelected() {
+        long practiceId = getIdFromPracticePlaceList();
+        if (practiceId >= 0) {
+            // ToDO Fetch and add the data to doctor spinner
+        } else {
+            showErrorDialog(getString(R.string.log_in_validation_invalid_practice_id));
         }
     }
 
@@ -181,7 +199,7 @@ public class LogInActivity extends AppCompatActivity {
         practicePlacesList = new ArrayList<>(practicePlaces);
 
         // For some reason, I have to re create adapter and notifydatasetchanged() for this to work properly
-        practiceIdsAdapter = new ArrayAdapter<>(LogInActivity.this,android.R.layout.select_dialog_item, practiceIdsList);
+        practiceIdsAdapter = new ArrayAdapter<>(LogInActivity.this, android.R.layout.select_dialog_item, practiceIdsList);
         practiceIdAutocomplete.setAdapter(practiceIdsAdapter);
         practiceIdsAdapter.notifyDataSetChanged();
     }

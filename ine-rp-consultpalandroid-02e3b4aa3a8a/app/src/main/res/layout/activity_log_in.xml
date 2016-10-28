@@ -84,8 +84,14 @@
                 android:id="@+id/log_in_practice_id_autocomplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/log_in_last_field_bottom_margin"
+                android:layout_marginBottom="@dimen/log_in_fields_bottom_margin"
                 android:hint="@string/log_in_practice_id_hint"/>
+
+                <Spinner
+                    android:id="@+id/log_in_spn_doctor_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/log_in_last_field_bottom_margin"></Spinner>
 
             <TextView
                 android:id="@+id/log_in_button"

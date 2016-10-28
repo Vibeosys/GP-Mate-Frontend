@@ -23,13 +23,13 @@ public class PracticeIdSearchListener implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         // Type 2 characters before searching
-        if (s.length()>1) {
+        if (s.length() > 1) {
             view.searchPracticeIds(s.toString());
         }
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        view.onPracticeSelected();
     }
 }
