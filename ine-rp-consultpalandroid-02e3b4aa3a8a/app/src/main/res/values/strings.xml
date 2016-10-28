@@ -68,6 +68,7 @@
 
 
     <string name="finish_text">Thank you. I will see you shortly.</string>
+
     <!--Splash screen message -->
     <string name="splash_screen_message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Sed lacinia vel dolor at venenatis. Nam aliquet convallis tortor quis egestas.
@@ -75,6 +76,15 @@
         consectetur augue vitae, condimentum mi. Pellentesque interdum lacus nisi,
         non posuere lectus rutrum et. Mauris euismod diam ut elit euismod imperdiet.
         Vestibulum sit amet massa eu diam volutpat sagittis.</string>
+
+    <!--Exit screen message -->
+    <string name="exit_screen_message">Would you consider a telephone consultation, or video
+        consultation instead of your face-to-face</string>
+    <string name="exit_screen_choice">Please select your choice (Yes/No) </string>
+    <string name="exit_screen_date">Please select  Date </string>
+    <string name="exit_screen_time">Please select  Time </string>
+
+    <!-- Select date for appointment -->
     <string name="prev_appoint_date_hint">Appointment Date</string>
     <string name="prev_appoint_time_hint">Appointment Time</string>
     <string name="prev_appoint_is_taken">Have you a previous appointment?</string>
@@ -82,7 +92,7 @@
     <string name="prev_appoint_taken_message">Enter appointment date and time</string>
     <string name="prev_appoint_next">Next</string>
     <string name="prev_appoint_validation_date_empty">Appointment date can not be empty</string>
-    <string name="prev_appoint_validation_time_empty">Appontment time can not be empty</string>
+    <string name="prev_appoint_validation_time_empty">Appointment time can not be empty</string>
 
 </resources>
 

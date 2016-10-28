@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.consultpal.android.ConsultPalApp;
 import com.consultpal.android.R;
@@ -15,12 +17,16 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class FinishActivity extends AppCompatActivity {
 
-    @Bind(R.id.finish_picture) ImageView picture;
-
+    @Bind(R.id.finish_picture)
+    ImageView picture;
+    @Bind(R.id.email_notification_choice)
+    Switch userNotification;
     private Session session;
     private Tracker mTracker;
 
@@ -54,6 +60,8 @@ public class FinishActivity extends AppCompatActivity {
     public void onClickFinishButton() {
         this.finish();
     }
+
+
 
     @Override
     protected void onResume() {
