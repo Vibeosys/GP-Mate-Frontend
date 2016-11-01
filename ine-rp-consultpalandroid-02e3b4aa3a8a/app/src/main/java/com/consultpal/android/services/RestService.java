@@ -1,7 +1,11 @@
 package com.consultpal.android.services;
 
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.consultpal.android.model.Doctor;
+import com.consultpal.android.model.DoctorsList;
+import com.consultpal.android.model.PracticePlaceList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.consultpal.android.model.PracticePlace;
@@ -28,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RestService implements DataService {
 
+    private static final String TAG = RestService.class.getSimpleName();
     public static RestService INSTANCE;
     private final ConsultPalAPI consultPalAPI;
 
@@ -40,7 +45,7 @@ public class RestService implements DataService {
         // HTTP
         final OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30,TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(interceptor)
                 .build();
@@ -64,8 +69,10 @@ public class RestService implements DataService {
     }
 
     @Override
-    public void logIn(String userName, String userSurname, long dob, String email, long practiceId, String gcmId) {
-        Call<Session> response = consultPalAPI.logIn(userName, userSurname, dob, email, practiceId, gcmId);
+    public void logIn(String userName, String userSurname, long dob, String email, long practiceId,
+                      String gcmId, long appointmentDate, long doctorId) {
+        Call<Session> response = consultPalAPI.logIn(userName, userSurname, dob, email, practiceId,
+                gcmId, appointmentDate, doctorId);
         response.enqueue(new Callback<Session>() {
             @Override
             public void onResponse(Call<Session> call, Response<Session> response) {
@@ -77,7 +84,6 @@ public class RestService implements DataService {
                     if (!TextUtils.isEmpty(response.message())) {
                         BusProvider.getRestBusInstance().post((response.message()));
                     }
-
 
 
                 }
@@ -98,7 +104,8 @@ public class RestService implements DataService {
             @Override
             public void onResponse(Call<ArrayList<PracticePlace>> call, Response<ArrayList<PracticePlace>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    BusProvider.getRestBusInstance().post(response.body());
+                    ArrayList<PracticePlace> practicePlaces = new ArrayList<PracticePlace>(response.body());
+                    BusProvider.getRestBusInstance().post(new PracticePlaceList(practicePlaces));
                 } else {
                     int statusCode = response.code();
                     ResponseBody errorBody = response.errorBody();
@@ -108,6 +115,28 @@ public class RestService implements DataService {
             @Override
             public void onFailure(Call<ArrayList<PracticePlace>> call, Throwable t) {
 
+            }
+        });
+    }
+
+    @Override
+    public void searchDoctorsByPracticeId(String practiceId) {
+        Call<List<Doctor>> response = consultPalAPI.searchDoctorsByPracticeId(practiceId);
+        response.enqueue(new Callback<List<Doctor>>() {
+            @Override
+            public void onResponse(Call<List<Doctor>> call, Response<List<Doctor>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ArrayList<Doctor> doctors = new ArrayList<Doctor>(response.body());
+                    BusProvider.getRestBusInstance().post(new DoctorsList(doctors));
+                } else {
+                    int statusCode = response.code();
+                    ResponseBody errorBody = response.errorBody();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Doctor>> call, Throwable t) {
+                Log.e(TAG, "Error to get the doctors");
             }
         });
     }
@@ -134,25 +163,25 @@ public class RestService implements DataService {
     public void updateSession(long sessionId, String token, List<Symptom> symptoms, List<Symptom> deletedSymptoms) {
         // Organizing list of symptoms into json object
         JsonArray jsonArray = new JsonArray();
-        for (int i=0; i<symptoms.size();i++){
+        for (int i = 0; i < symptoms.size(); i++) {
             // TODO in case client asks not to send empty symptoms. the issue is that api returns without
             // TODO empty boxes so it collapses with existent empty boxes, or list doesn't show boxes to complete
             //if (!(symptoms.get(i).getId() == null && TextUtils.isEmpty(symptoms.get(i).getDescription()))) {
-                JsonObject jsonObject = new JsonObject();
-                if (symptoms.get(i).getId() != null) {
-                    jsonObject.addProperty("id", symptoms.get(i).getId());
-                }
-                jsonObject.addProperty("priority", symptoms.get(i).getPriority());
-                jsonObject.addProperty("description", symptoms.get(i).getDescription());
-                jsonObject.addProperty("answer1", symptoms.get(i).getAnswer1());
-                jsonObject.addProperty("answer2", symptoms.get(i).getAnswer2());
-                jsonArray.add(jsonObject);
+            JsonObject jsonObject = new JsonObject();
+            if (symptoms.get(i).getId() != null) {
+                jsonObject.addProperty("id", symptoms.get(i).getId());
+            }
+            jsonObject.addProperty("priority", symptoms.get(i).getPriority());
+            jsonObject.addProperty("description", symptoms.get(i).getDescription());
+            jsonObject.addProperty("answer1", symptoms.get(i).getAnswer1());
+            jsonObject.addProperty("answer2", symptoms.get(i).getAnswer2());
+            jsonArray.add(jsonObject);
             //}
         }
 
         // Organizing deletedSymptoms into json
         JsonArray jsonArrayDeleted = new JsonArray();
-        for (int i=0; i<deletedSymptoms.size();i++){
+        for (int i = 0; i < deletedSymptoms.size(); i++) {
             if (deletedSymptoms.get(i).getId() != null) {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("id", deletedSymptoms.get(i).getId());
@@ -184,9 +213,9 @@ public class RestService implements DataService {
                                        List<Symptom> symptoms, List<Symptom> deletedSymptoms) {
         // Organizing list of symptoms into json object
         JsonArray jsonArray = new JsonArray();
-        for (int i=0; i<symptoms.size();i++){
+        for (int i = 0; i < symptoms.size(); i++) {
             JsonObject jsonObject = new JsonObject();
-            if (symptoms.get(i).getId()!= null) {
+            if (symptoms.get(i).getId() != null) {
                 jsonObject.addProperty("id", symptoms.get(i).getId());
             }
             jsonObject.addProperty("priority", symptoms.get(i).getPriority());
@@ -198,7 +227,7 @@ public class RestService implements DataService {
 
         // Organizing deletedSymptoms into json
         JsonArray jsonArrayDeleted = new JsonArray();
-        for (int i=0; i<deletedSymptoms.size();i++){
+        for (int i = 0; i < deletedSymptoms.size(); i++) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("id", deletedSymptoms.get(i).getId());
             jsonArrayDeleted.add(jsonObject);

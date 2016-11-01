@@ -9,9 +9,16 @@ import java.util.List;
  */
 public interface DataService {
 
-    void logIn(String userName, String userSurname, long dob, String email, long practiceId, String gcmId);
+    void logIn(String userName, String userSurname, long dob, String email, long practiceId,
+               String gcmId, long appointmentDate, long doctorId);
+
     void fetchPracticeIds(String stringToSearch);
+
+    void searchDoctorsByPracticeId(String practiceId);
+
     void updateSession(long sessionId, String token, List<Symptom> symptoms, List<Symptom> deletedSymptoms);
+
     void finishSession(long sessionId, String token);
+
     void updateAndFinishSession(long sessionId, String sessionToken, List<Symptom> symptoms, List<Symptom> deletedSymptoms);
 }

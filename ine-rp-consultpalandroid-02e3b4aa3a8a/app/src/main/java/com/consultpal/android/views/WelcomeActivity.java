@@ -34,18 +34,26 @@ import butterknife.OnClick;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    @Bind(R.id.welcome_practice_picture) ImageView practicePlaceIV;
-    @Bind(R.id.welcome_practice_place) TextView practicePlaceTV;
-    @Bind(R.id.welcome_practice_description) TextView practiceDescriptionTV;
-    @Bind(R.id.welcome_consent) TextView welcomeConsentTV;
-    @Bind(R.id.welcome_continue_button) TextView continueButton;
-    @Bind(R.id.welcome_exit_button) TextView exitButton;
-    @Bind(R.id.welcome_progress_bar) ProgressWheel progressBar;
+    @Bind(R.id.welcome_practice_picture)
+    ImageView practicePlaceIV;
+    @Bind(R.id.welcome_practice_place)
+    TextView practicePlaceTV;
+    @Bind(R.id.welcome_practice_description)
+    TextView practiceDescriptionTV;
+    @Bind(R.id.welcome_consent)
+    TextView welcomeConsentTV;
+    @Bind(R.id.welcome_continue_button)
+    TextView continueButton;
+    @Bind(R.id.welcome_exit_button)
+    TextView exitButton;
+    @Bind(R.id.welcome_progress_bar)
+    ProgressWheel progressBar;
 
     private WelcomePresenter presenter;
     private Session session;
 
     private Tracker mTracker;
+    private long selectedDoctorId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         if (getIntent() != null && getIntent().hasExtra(Constants.LOG_IN_EXTRA_SESSION)) {
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
+            selectedDoctorId = getIntent().getExtras().getLong(Constants.DOCTOR_ID);
         }
 
         if (session != null && session.getPracticePlace() != null) {
@@ -96,7 +105,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", null);
                 builder.show();
             }
-        },138,164,0);
+        }, 138, 164, 0);
         ssb.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
@@ -117,7 +126,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", null);
                 builder.show();
             }
-        },169,183,0);
+        }, 169, 183, 0);
 
         welcomeConsentTV.setText(ssb, TextView.BufferType.SPANNABLE);
     }
@@ -149,7 +158,8 @@ public class WelcomeActivity extends AppCompatActivity {
     @OnClick(R.id.welcome_continue_button)
     public void onContinueClick() {
         presenter.submit(session.getPatient().getName(), session.getPatient().getLastName(),
-                session.getPatient().getDateOfBirth(), session.getPatient().getEmail(), session.getPracticePlace().getId());
+                session.getPatient().getDateOfBirth(), session.getPatient().getEmail(),
+                session.getPracticePlace().getId(), session.getAppointmentDate(), selectedDoctorId);
     }
 
     public void openSessionActivity(Session session) {
@@ -167,6 +177,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     public void openLogIn() {
         Intent intent = new Intent(WelcomeActivity.this, LogInActivity.class);
+        intent.putExtra(Constants.APPOINTMENT_DATE_TIME, session.getAppointmentDate());
         startActivity(intent);
         this.finish();
     }

@@ -7,7 +7,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,9 +18,11 @@ import android.widget.Toast;
 
 import com.consultpal.android.ConsultPalApp;
 import com.consultpal.android.R;
+import com.consultpal.android.adapters.DoctorSpinnerAdapter;
 import com.consultpal.android.listeners.DatePickerListener;
 import com.consultpal.android.listeners.PracticeIdSearchListener;
 import com.consultpal.android.listeners.PracticeIdSelectedListener;
+import com.consultpal.android.model.Doctor;
 import com.consultpal.android.model.Patient;
 import com.consultpal.android.model.PracticePlace;
 import com.consultpal.android.model.rest.Session;
@@ -42,8 +47,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-public class LogInActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private static final String TAG = LogInActivity.class.getSimpleName();
     @Bind(R.id.log_in_name_et)
     EditText nameET;
     @Bind(R.id.log_in_surname_et)
@@ -60,8 +66,12 @@ public class LogInActivity extends AppCompatActivity {
     private LogInPresenter presenter;
     private List<String> practiceIdsList = new ArrayList<>();
     private List<PracticePlace> practicePlacesList = new ArrayList<>();
+    private List<Doctor> doctorArrayList = new ArrayList<>();
     ArrayAdapter<String> practiceIdsAdapter;
     private Tracker mTracker;
+    private DoctorSpinnerAdapter doctorSpinnerAdapter;
+    private long appointmentDate;
+    private long selectedDoctorId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +79,10 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         ButterKnife.bind(this);
 
+        spnDoctors.setEnabled(false);
         // bind to presenter
         presenter = new LogInPresenter(this);
-
+        appointmentDate = getIntent().getExtras().getLong(Constants.APPOINTMENT_DATE_TIME);
         practiceIdsAdapter = new ArrayAdapter<>(LogInActivity.this, android.R.layout.select_dialog_item, practiceIdsList);
         practiceIdAutocomplete.setThreshold(2);
         practiceIdAutocomplete.setAdapter(practiceIdsAdapter);
@@ -91,7 +102,7 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
         thread.start();
-
+        spnDoctors.setOnItemSelectedListener(this);
         // Obtain the shared Tracker instance.
         ConsultPalApp application = (ConsultPalApp) getApplication();
         mTracker = application.getDefaultTracker();
@@ -148,13 +159,13 @@ public class LogInActivity extends AppCompatActivity {
     public void onClickStartButton() {
         String validationMsg = Validations.validateLogInForm(nameET.getText().toString(),
                 surnameET.getText().toString(), dobET.getText().toString(), emailET.getText().toString(),
-                practiceIdAutocomplete.getText().toString());
+                practiceIdAutocomplete.getText().toString(), selectedDoctorId);
         if (validationMsg.equals(Validations.VALIDATION_OK)) {
             long practiceId = getIdFromPracticePlaceList();
             if (practiceId >= 0) {
                 openWelcomeActivity(nameET.getText().toString(),
                         surnameET.getText().toString(), DateUtils.stringDateToLong(dobET.getText().toString()),
-                        emailET.getText().toString(), getSelectedPracticePlace(practiceId));
+                        emailET.getText().toString(), getSelectedPracticePlace(practiceId), selectedDoctorId);
             } else {
                 showErrorDialog(getString(R.string.log_in_validation_invalid_practice_id));
             }
@@ -166,9 +177,12 @@ public class LogInActivity extends AppCompatActivity {
     public void onPracticeSelected() {
         long practiceId = getIdFromPracticePlaceList();
         if (practiceId >= 0) {
+            Log.d(TAG, "## Fetch doctor");
+            spnDoctors.setEnabled(true);
             // ToDO Fetch and add the data to doctor spinner
+            searchDoctorsByPracticeId(practiceIdAutocomplete.getText().toString());
         } else {
-            showErrorDialog(getString(R.string.log_in_validation_invalid_practice_id));
+            //showErrorDialog(getString(R.string.log_in_validation_invalid_practice_id));
         }
     }
 
@@ -191,6 +205,10 @@ public class LogInActivity extends AppCompatActivity {
         presenter.fetchPracticeIds(stringToSearch);
     }
 
+    public void searchDoctorsByPracticeId(String stringToSearch) {
+        presenter.searchDoctorsByPracticeId(stringToSearch);
+    }
+
     public void updatePracticeIdAutocompleteList(List<String> practiceIds, List<PracticePlace> practicePlaces) {
         practiceIdsList.clear();
         practiceIdsList = new ArrayList<>(practiceIds);
@@ -204,7 +222,16 @@ public class LogInActivity extends AppCompatActivity {
         practiceIdsAdapter.notifyDataSetChanged();
     }
 
-    public void openWelcomeActivity(String name, String surname, long dob, String email, PracticePlace practicePlace) {
+    public void updateDoctorsSpn(ArrayList<Doctor> doctors) {
+        doctorArrayList.clear();
+        doctorArrayList = new ArrayList<>(doctors);
+        doctorSpinnerAdapter = new DoctorSpinnerAdapter(getApplicationContext(), doctors);
+        spnDoctors.setAdapter(doctorSpinnerAdapter);
+        doctorSpinnerAdapter.notifyDataSetChanged();
+    }
+
+    public void openWelcomeActivity(String name, String surname, long dob, String email, PracticePlace practicePlace,
+                                    long selectedDoctorId) {
         Session session = new Session();
         Patient patient = new Patient();
         patient.setName(name);
@@ -213,11 +240,22 @@ public class LogInActivity extends AppCompatActivity {
         patient.setEmail(email);
         session.setPatient(patient);
         session.setPracticePlace(practicePlace);
-
+        session.setAppointmentDate(appointmentDate);
         Intent intent = new Intent(LogInActivity.this, WelcomeActivity.class);
         intent.putExtra(Constants.LOG_IN_EXTRA_SESSION, session);
+        intent.putExtra(Constants.DOCTOR_ID, selectedDoctorId);
         startActivity(intent);
         this.finish();
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Doctor doctor = (Doctor) doctorSpinnerAdapter.getItem(position);
+        selectedDoctorId = doctor.getId();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        selectedDoctorId = 0;
+    }
 }

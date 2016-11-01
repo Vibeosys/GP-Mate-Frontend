@@ -15,7 +15,7 @@ public class WelcomePresenter {
 
     private WelcomeActivity welcomeView;
 
-    public WelcomePresenter (WelcomeActivity view) {
+    public WelcomePresenter(WelcomeActivity view) {
         this.welcomeView = view;
     }
 
@@ -28,13 +28,15 @@ public class WelcomePresenter {
     }
 
 
-    public void submit(String name, String surname, long dob, String email, long practiceId) {
+    public void submit(String name, String surname, long dob, String email, long practiceId,
+                       long appointmentDate, long doctorId) {
         DataService dataService = RestService.getInstance();
-        dataService.logIn(name, surname, dob, email, practiceId, FirebaseInstanceId.getInstance().getToken());
+        dataService.logIn(name, surname, dob, email, practiceId, FirebaseInstanceId.getInstance().getToken(),
+                appointmentDate, doctorId);
     }
 
     @Subscribe
-    public void onLogInResponse (Session session) {
+    public void onLogInResponse(Session session) {
         welcomeView.openSessionActivity(session);
         welcomeView.startCountDown();
     }

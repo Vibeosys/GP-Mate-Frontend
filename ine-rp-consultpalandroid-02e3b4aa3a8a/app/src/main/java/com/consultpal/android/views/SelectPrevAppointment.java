@@ -108,6 +108,7 @@ public class SelectPrevAppointment extends AppCompatActivity {
             Intent intent = new Intent(SelectPrevAppointment.this, LogInActivity.class);
             intent.putExtra(Constants.APPOINTMENT_DATE_TIME, dateTimeLong);
             startActivity(intent);
+            this.finish();
         } else {
             showErrorDialog(Validations.getErrorMsg(this, validationMsg));
         }

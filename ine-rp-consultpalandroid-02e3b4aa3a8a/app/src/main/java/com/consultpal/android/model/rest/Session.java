@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by ines on 5/14/16.
  */
-public class Session implements Serializable{
+public class Session implements Serializable {
 
     @SerializedName("id")
     private long id;
@@ -30,6 +30,8 @@ public class Session implements Serializable{
     private List<Symptom> symptoms;
     @SerializedName("token")
     private String token;
+
+    private long appointmentDate;
 
     public Session() {
         super();
@@ -110,5 +112,13 @@ public class Session implements Serializable{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public long getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(long appointmentDate) {
+        this.appointmentDate = appointmentDate;
     }
 }

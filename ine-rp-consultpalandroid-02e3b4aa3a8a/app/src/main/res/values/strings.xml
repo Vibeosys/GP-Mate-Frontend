@@ -96,6 +96,7 @@
     <string name="prev_appoint_next">Next</string>
     <string name="prev_appoint_validation_date_empty">Appointment date can not be empty</string>
     <string name="prev_appoint_validation_time_empty">Appointment time can not be empty</string>
+    <string name="log_in_validation_null_doctor">Please select the doctor</string>
 
 </resources>
 

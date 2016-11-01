@@ -23,4 +23,5 @@
 
 
     <dimen name="finish_screen_text_size">28sp</dimen>
+    <dimen name="spinner_text_size">30sp</dimen>
 </resources>

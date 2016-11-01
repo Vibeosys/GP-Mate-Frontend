@@ -23,4 +23,7 @@ public class Constants {
 
     //Appointment
     public static final String APPOINTMENT_DATE_TIME = "DATE_AND_TIME";
+
+    //welcome
+    public static final String DOCTOR_ID = "DOCTOR_ID";
 }

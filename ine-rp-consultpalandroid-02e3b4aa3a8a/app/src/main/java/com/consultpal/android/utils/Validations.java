@@ -22,8 +22,9 @@ public class Validations {
     public static final String FCM_ID_NULL = "VALIDATION_FCM_ID_NULL";
     private static final String APPOINTMENT_DATE = "APPOINTMENT_DATE_NULL";
     private static final String APPOINTMENT_TIME = "APPOINTMENT_TIME_NULL";
+    private static final String DOCTOR_ID_EMPTY = "DOCTOR_ID_EMPTY";
 
-    public static String validateLogInForm(String name, String surname, String dob, String email, String practiceId) {
+    public static String validateLogInForm(String name, String surname, String dob, String email, String practiceId, long doctorId) {
         if (TextUtils.isEmpty(name)) {
             return NAME_EMPTY;
         }
@@ -45,6 +46,9 @@ public class Validations {
 
         if (FirebaseInstanceId.getInstance().getToken() == null) {
             return FCM_ID_NULL;
+        }
+        if (doctorId == 0) {
+            return DOCTOR_ID_EMPTY;
         }
 
         return VALIDATION_OK;
@@ -72,6 +76,8 @@ public class Validations {
                 return context.getString(R.string.prev_appoint_validation_date_empty);
             case APPOINTMENT_TIME:
                 return context.getString(R.string.prev_appoint_validation_time_empty);
+            case DOCTOR_ID_EMPTY:
+                return context.getString(R.string.log_in_validation_null_doctor);
             default:
                 return context.getString(R.string.log_in_validation_error);
         }
