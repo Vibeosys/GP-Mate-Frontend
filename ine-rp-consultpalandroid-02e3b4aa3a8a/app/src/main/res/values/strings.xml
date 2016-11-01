@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ConsultPal</string>
+    <string name="app_name">GP Mate</string>
 
     <string name="log_in_name_hint">Name</string>
     <string name="log_in_surname_hint">Surname</string>
@@ -27,7 +27,7 @@
     <string name="session_top_message_doctor">Hi, I’m %1$s. Please use the boxes below to tell me how you are feeling and what you would like to discuss. I am interested in your physical and mental wellbeing.</string>
     <string name="session_symptom_list_first_hint">Tap here to share</string>
     <string name="session_symptom_list_others_hint">Tap here to share (Optional)</string>
-    <string name="session_messages_button">Messages</string>
+    <string name="session_messages_button">Messages Received</string>
     <string name="session_finish_button">Finish</string>
     <string name="session_help_button">Help</string>
     <string name="help_dialog_title">Help</string>
@@ -86,6 +86,14 @@
     <string name="next_appointment_button">CONTACT ME</string>
     <string name="date_validation_message">Please select next appointment date</string>
     <string name="time_validation_message">Please select next appointment time</string>
+    <string name="sender_email">dummy@gmail.com</string>
+    <string name="sender_email_password">pwd</string>
+    <string name="received_email_password">received@gmail.com</string>
+    <string name="select_time_hint">Time Selected</string>
+    <string name="select_date_hint">Date Selected</string>
+    <string name="set_appointment_msg">Thank you for using GP Mate</string>
+    <string name="please_wait_msg">Please wait...</string>
+
 
     <!-- Select date for appointment -->
     <string name="prev_appoint_date_hint">Appointment Date</string>
