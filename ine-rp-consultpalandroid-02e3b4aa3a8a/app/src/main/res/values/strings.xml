@@ -81,8 +81,11 @@
     <string name="exit_screen_message">Would you consider a telephone consultation, or video
         consultation instead of your face-to-face</string>
     <string name="exit_screen_choice">Please select your choice (Yes/No) </string>
-    <string name="exit_screen_date">Please select  Date </string>
-    <string name="exit_screen_time">Please select  Time </string>
+    <string name="exit_screen_date">Date</string>
+    <string name="exit_screen_time">Time</string>
+    <string name="next_appointment_button">CONTACT ME</string>
+    <string name="date_validation_message">Please select next appointment date</string>
+    <string name="time_validation_message">Please select next appointment time</string>
 
     <!-- Select date for appointment -->
     <string name="prev_appoint_date_hint">Appointment Date</string>

@@ -20,4 +20,7 @@
     <dimen name="symptom_box_height">150dp</dimen>
     <dimen name="symptom_box_text_size">24sp</dimen>
     <dimen name="select_prev_switch_padding">20dp</dimen>
+
+
+    <dimen name="finish_screen_text_size">28sp</dimen>
 </resources>
