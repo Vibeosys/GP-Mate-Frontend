@@ -111,7 +111,12 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
 
         setTopLayout();
 
-
+        boolean isTablet = getResources().getBoolean(R.bool.is_tab);
+        if (isTablet) {
+            countdownTV.setVisibility(View.VISIBLE);
+        } else {
+            countdownTV.setVisibility(View.INVISIBLE);
+        }
         symptomsRV.setHasFixedSize(true);
         symptomsRV.setLayoutManager(new LinearLayoutManager(this));
         symptomsRV.addItemDecoration(new SymptomListDividerDecorator(20));
