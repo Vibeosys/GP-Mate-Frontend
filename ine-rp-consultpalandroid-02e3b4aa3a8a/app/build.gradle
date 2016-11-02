@@ -41,6 +41,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.firebase:firebase-messaging:9.0.1'
     compile 'com.google.android.gms:play-services-analytics:9.0.1'
+    //Jar files for sending email using SMTP
     compile files('libs/activation.jar')
     compile files('libs/additionnal.jar')
     compile files('libs/mail.jar')

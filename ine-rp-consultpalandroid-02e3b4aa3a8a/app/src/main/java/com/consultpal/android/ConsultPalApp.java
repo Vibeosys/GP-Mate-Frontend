@@ -21,6 +21,10 @@ public class ConsultPalApp extends Application {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
             // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
             mTracker = analytics.newTracker(R.xml.global_tracker);
+            /* This part of code is used for debugging
+            analytics.setDryRun(true);
+            mTracker = analytics.newTracker("UA-86490574-2");
+            mTracker.setSampleRate(50.0d);*/
         }
         return mTracker;
     }

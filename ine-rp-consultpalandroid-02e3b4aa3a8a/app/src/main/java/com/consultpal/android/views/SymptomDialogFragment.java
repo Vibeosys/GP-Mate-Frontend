@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,9 +22,12 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.consultpal.android.ConsultPalApp;
 import com.consultpal.android.R;
 import com.consultpal.android.model.Symptom;
 import com.consultpal.android.utils.Constants;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,7 +45,7 @@ public class SymptomDialogFragment extends AppCompatDialogFragment {
     private Symptom symptom;
     private int position;
     SessionActivity callingActivity;
-
+    private Tracker mTracker;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +55,9 @@ public class SymptomDialogFragment extends AppCompatDialogFragment {
         }
 
         callingActivity = (SessionActivity) getActivity();
-
+        // Obtain the shared Tracker instance.
+        ConsultPalApp application = (ConsultPalApp)getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
         // request a window without the title
         setStyle(STYLE_NO_TITLE, 0);
     }
@@ -89,6 +95,8 @@ public class SymptomDialogFragment extends AppCompatDialogFragment {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.WRAP_CONTENT;
             dialog.getWindow().setLayout(width, height);
+
+
         }
     }
 
@@ -102,6 +110,14 @@ public class SymptomDialogFragment extends AppCompatDialogFragment {
     public void saveSymptom() {
         symptom.setDescription(descriptionET.getText().toString());
         symptom.setAnswer1(answer1ET.getText().toString());
+        mTracker.setScreenName("SymptomDialogScreen");
+        mTracker.send(new HitBuilders.EventBuilder().
+                setCategory("Symptoms").
+                setAction(descriptionET.getText().toString()).
+                setLabel(descriptionET.getText().toString()).
+                setValue(1).build());
+        Log.d("TAG",mTracker.toString());
+
         if (answer2RG.getCheckedRadioButtonId() == R.id.symptom_question_2_positive) {
             symptom.setAnswer2(true);
         } else if (answer2RG.getCheckedRadioButtonId() == R.id.symptom_question_2_negative){
