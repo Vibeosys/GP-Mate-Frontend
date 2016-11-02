@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#b7b7b7"
+    android:keepScreenOn="true"
     tools:context="com.consultpal.android.views.SessionActivity">
 
     <RelativeLayout
@@ -18,48 +19,48 @@
 
         <ImageView
             android:id="@+id/session_practice_picture"
-            android:layout_centerVertical="true"
-            android:scaleType="centerCrop"
             android:layout_width="@dimen/session_top_picture_size"
             android:layout_height="@dimen/session_top_picture_size"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/session_top_picture_vertical_margin"
             android:layout_marginRight="@dimen/session_top_picture_vertical_margin"
-            android:padding="1dp"
+            android:background="@drawable/imageview_square_border"
             android:cropToPadding="true"
-            android:background="@drawable/imageview_square_border"/>
+            android:padding="1dp"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/session_top_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/session_practice_picture"
             android:layout_toEndOf="@+id/session_practice_picture"
+            android:layout_toRightOf="@+id/session_practice_picture"
+            android:text="@string/session_top_message_practice"
             android:textColor="#242424"
-            android:textSize="@dimen/session_top_text_size"
-            android:text="@string/session_top_message_practice"/>
+            android:textSize="@dimen/session_top_text_size" />
 
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/session_symptoms_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/session_bottom_layout"
         android:layout_below="@+id/session_top_layout"
         android:paddingLeft="7dp"
         android:paddingRight="7dp"
         android:paddingTop="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/session_bottom_layout"
-        tools:listitem="@layout/symptom_list_item"/>
+        tools:listitem="@layout/symptom_list_item" />
 
     <LinearLayout
         android:id="@+id/session_bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="6dp"
+        android:background="@drawable/session_top_layout_bg"
         android:orientation="horizontal"
-        android:weightSum="3"
-        android:background="@drawable/session_top_layout_bg">
+        android:padding="6dp"
+        android:weightSum="3">
 
         <RelativeLayout
             android:id="@+id/session_messages_layout"
@@ -72,58 +73,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/session_button_bg"
-                android:text="@string/session_messages_button"
-                android:padding="10dp"
-                android:textSize="@dimen/session_bottom_buttons_text_size"
                 android:clickable="true"
-                android:textColor="@color/white"
+                android:drawableTop="@drawable/ic_message_white_24dp"
                 android:gravity="center"
-                android:drawableTop="@drawable/ic_message_white_24dp"/>
+                android:padding="10dp"
+                android:text="@string/session_messages_button"
+                android:textColor="@color/white"
+                android:textSize="@dimen/session_bottom_buttons_text_size" />
 
             <TextView
                 android:id="@+id/session_new_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:layout_margin="10dp"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/colorAccent"
+                android:layout_margin="10dp"
                 android:background="@drawable/new_message_bg"
-                android:visibility="gone"/>
+                android:padding="2dp"
+                android:textColor="@color/colorAccent"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp">
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/session_countdown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="@drawable/session_chronometer_bg"
-                android:text="00:00"
-                android:textStyle="bold"
-                android:textSize="@dimen/session_bottom_buttons_text_size"
-                android:textColor="@color/grey_regular_text"
                 android:layout_marginBottom="3dp"
-                android:gravity="center"/>
+                android:background="@drawable/session_chronometer_bg"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="00:00"
+                android:textColor="@color/grey_regular_text"
+                android:textSize="@dimen/session_bottom_buttons_text_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/session_help_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:background="@drawable/session_button_bg"
+                android:gravity="center"
+                android:padding="10dp"
                 android:text="@string/session_help_button"
-                android:textSize="@dimen/session_bottom_buttons_text_size"
                 android:textColor="@color/white"
-                android:gravity="center"/>
+                android:textSize="@dimen/session_bottom_buttons_text_size" />
 
         </LinearLayout>
 
@@ -132,14 +133,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="10dp"
             android:background="@drawable/session_button_bg"
-            android:text="@string/session_finish_button"
-            android:textSize="@dimen/session_bottom_buttons_text_size"
             android:clickable="true"
-            android:textColor="@color/white"
+            android:drawableTop="@drawable/ic_send_white_24dp"
             android:gravity="center"
-            android:drawableTop="@drawable/ic_send_white_24dp"/>
+            android:padding="10dp"
+            android:text="@string/session_finish_button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/session_bottom_buttons_text_size" />
     </LinearLayout>
 
 </RelativeLayout>

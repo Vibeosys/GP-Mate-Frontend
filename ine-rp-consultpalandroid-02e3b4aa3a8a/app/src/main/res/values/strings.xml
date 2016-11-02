@@ -106,5 +106,9 @@
     <string name="prev_appoint_validation_time_empty">Appointment time can not be empty</string>
     <string name="log_in_validation_null_doctor">Please select the doctor</string>
 
+
+    <!-- Session screen -->
+    <string name="time_interval_dialog_title">Running time</string>
+    <string name="time_interval_dialog_msg">You want to continue with the application? You are inactive for last 2 minute</string>
 </resources>
 

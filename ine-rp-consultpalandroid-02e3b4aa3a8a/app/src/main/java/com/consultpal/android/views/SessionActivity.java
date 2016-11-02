@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Rect;
+import android.nfc.Tag;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.FragmentManager;
@@ -18,8 +20,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +40,7 @@ import com.consultpal.android.model.rest.Session;
 import com.consultpal.android.presenters.SessionPresenter;
 import com.consultpal.android.services.CountdownService;
 import com.consultpal.android.utils.Constants;
+import com.consultpal.android.utils.DateUtils;
 import com.consultpal.android.utils.SimpleItemTouchHelperCallback;
 import com.consultpal.android.utils.SymptomListDividerDecorator;
 import com.google.android.gms.analytics.HitBuilders;
@@ -44,19 +49,27 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SessionActivity extends AppCompatActivity implements OnStartDragListener{
+public class SessionActivity extends AppCompatActivity implements OnStartDragListener {
 
-    @Bind(R.id.session_symptoms_recycler_view) RecyclerView symptomsRV;
-    @Bind(R.id.session_practice_picture) ImageView practiceImageView;
-    @Bind(R.id.session_top_message) TextView topMessageTV;
-    @Bind(R.id.session_countdown) TextView countdownTV;
-    @Bind(R.id.session_new_message) TextView newMessageTV;
+    private static final String TAG = SessionActivity.class.getSimpleName();
+    @Bind(R.id.session_symptoms_recycler_view)
+    RecyclerView symptomsRV;
+    @Bind(R.id.session_practice_picture)
+    ImageView practiceImageView;
+    @Bind(R.id.session_top_message)
+    TextView topMessageTV;
+    @Bind(R.id.session_countdown)
+    TextView countdownTV;
+    @Bind(R.id.session_new_message)
+    TextView newMessageTV;
 
     private SessionPresenter presenter;
     // Use this list just to init adapter. When sending info to API use up to date Adapter's list (in case of swapping, editing)
@@ -70,15 +83,19 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     private AlertDialog messagesDialog;
 
     private Tracker mTracker;
+    private long startTime = 2 * 60 * 1000; // 2 MINS IDLE TIME
+    private final long interval = 1 * 1000;
+
+    CountDownTimer cdtInterval;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session);
         ButterKnife.bind(this);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         presenter = new SessionPresenter(this);
-
+        cdtInterval = new MyCountDownTimer(startTime, interval);
         if (savedInstanceState != null) {
             session = (Session) savedInstanceState.getSerializable(Constants.KEY_SESSION);
             symptomsList = savedInstanceState.getParcelableArrayList(Constants.KEY_SESSION_SYMPTOMS);
@@ -112,6 +129,13 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     }
 
     @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        cdtInterval.cancel();
+        cdtInterval.start();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(Constants.KEY_SESSION, session);
@@ -122,6 +146,8 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     @Override
     protected void onResume() {
         super.onResume();
+        cdtInterval.cancel();
+        cdtInterval.start();
         presenter.start();
         registerReceiver(br, new IntentFilter(CountdownService.COUNTDOWN_BR));
         registerReceiver(brUpdate, new IntentFilter(CountdownService.COUNTDOWN_UPDATE));
@@ -152,6 +178,12 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
             // Receiver was probably already stopped in onPause()
         }
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        cdtInterval.cancel();
+        super.onDestroy();
     }
 
     @Override
@@ -189,7 +221,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
                     topMessageTV.setText(getString(R.string.session_top_message_doctor, session.getDoctor().getName()));
                 }
                 // If doctor has picture, update imageview
-                if (!TextUtils.isEmpty(session.getDoctor().getImageProfileUrl())){
+                if (!TextUtils.isEmpty(session.getDoctor().getImageProfileUrl())) {
                     setPracticeImageView(Constants.BASE_ENDPOINT_PICTURES + session.getDoctor().getImageProfileUrl());
                 }
             }
@@ -239,7 +271,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         Rect displayRectangle = new Rect();
         Window window = getWindow();
         window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
-        v.setMinimumHeight((int)(displayRectangle.height() * 0.9f));
+        v.setMinimumHeight((int) (displayRectangle.height() * 0.9f));
 
         builder.setView(v);
         builder.setPositiveButton("CLOSE", null);
@@ -271,7 +303,13 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
                 }
             }
         });
-        builder.setNegativeButton("No", null);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cdtInterval.cancel();
+                cdtInterval.start();
+            }
+        });
         builder.show();
     }
 
@@ -339,8 +377,8 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
             long secsUntilFinished = intent.getLongExtra(CountdownService.COUNTDOWN_BR, 0) / 1000;
             int minutes = ((int) (secsUntilFinished / 60)) % 60;
             long seconds = secsUntilFinished % 60;
-            countdownTV.setText(((minutes<10)?"0":"")+String.valueOf(minutes)+":"+
-                    ((seconds<10)?"0":"")+String.valueOf(seconds));
+            countdownTV.setText(((minutes < 10) ? "0" : "") + String.valueOf(minutes) + ":" +
+                    ((seconds < 10) ? "0" : "") + String.valueOf(seconds));
         }
     }
 
@@ -380,8 +418,8 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     }
 
     public void onMsgReceived(final Long practicePlaceId, final String practiceName,
-                                    final Long doctorId, final String doctorName, final String message,
-                                    final long dateSent) {
+                              final Long doctorId, final String doctorName, final String message,
+                              final long dateSent) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -425,7 +463,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
 
     private int getUnreadMessagesCount() {
         int count = 0;
-        for (int i=0; i<messagesList.size();i++) {
+        for (int i = 0; i < messagesList.size(); i++) {
             if (!messagesList.get(i).isRead()) {
                 count++;
             }
@@ -434,7 +472,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     }
 
     private void setMessagesAsRead() {
-        for (int i=0; i<messagesList.size();i++) {
+        for (int i = 0; i < messagesList.size(); i++) {
             messagesList.get(i).setRead(true);
         }
     }
@@ -448,4 +486,48 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         }
     }
 
+    public class MyCountDownTimer extends CountDownTimer {
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+
+        @Override
+        public void onFinish() {
+            //2 min time interval dialog
+            showErrorDialog(getResources().getString(R.string.time_interval_dialog_title),
+                    getResources().getString(R.string.time_interval_dialog_msg));
+           /* Toast.makeText(getApplicationContext(), "2 mins you dont have any updates",
+                    Toast.LENGTH_LONG).show();*/
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            Log.d(TAG, "##" + String.format("%d min, %d sec",
+                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))
+            ));
+        }
+    }
+
+    public void showErrorDialog(String title, String message) {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cdtInterval.cancel();
+                cdtInterval.start();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishSession(false);
+            }
+        });
+        builder.show();
+    }
 }
