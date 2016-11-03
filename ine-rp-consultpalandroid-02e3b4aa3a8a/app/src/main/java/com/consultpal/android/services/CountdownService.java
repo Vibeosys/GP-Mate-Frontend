@@ -6,6 +6,8 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 
+import com.consultpal.android.utils.SharedPrefManager;
+
 
 /**
  * Created by ines on 5/29/16.
@@ -18,13 +20,12 @@ public class CountdownService extends Service {
     Intent bi = new Intent(COUNTDOWN_BR);
     Intent biUpdate = new Intent(COUNTDOWN_UPDATE);
     private long minuteInMillis = 60000;
-    private final static int INTERVAL = 1000 * 60 ; //1 minute
+    private final static int INTERVAL = 1000 * 60; //1 minute
 
     private static CountDownTimer cdt = null;
     Handler mHandler = new Handler();
-
-    Runnable mHandlerTask = new Runnable()
-    {
+    private SharedPrefManager sharedPrefManager;
+    Runnable mHandlerTask = new Runnable() {
         @Override
         public void run() {
             sendUpdatedSymptoms();
@@ -43,8 +44,9 @@ public class CountdownService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        cdt = new CountDownTimer(minuteInMillis * 15, 1000) {
+        sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
+        int maxMin = sharedPrefManager.getTimesInMin();
+        cdt = new CountDownTimer(minuteInMillis * maxMin, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 

@@ -3,6 +3,7 @@ package com.consultpal.android.services;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.consultpal.android.model.Configuration;
 import com.consultpal.android.model.Doctor;
 import com.consultpal.android.model.DoctorsList;
 import com.consultpal.android.model.PracticePlaceList;
@@ -95,6 +96,22 @@ public class RestService implements DataService {
             }
         });
 
+    }
+
+    @Override
+    public void getConfig() {
+        Call<ArrayList<Configuration>> response = consultPalAPI.getConfig();
+        response.enqueue(new Callback<ArrayList<Configuration>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Configuration>> call, Response<ArrayList<Configuration>> response) {
+                BusProvider.getRestBusInstance().post(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Configuration>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

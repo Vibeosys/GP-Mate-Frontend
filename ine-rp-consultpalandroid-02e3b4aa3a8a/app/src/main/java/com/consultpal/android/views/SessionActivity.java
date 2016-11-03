@@ -41,6 +41,7 @@ import com.consultpal.android.presenters.SessionPresenter;
 import com.consultpal.android.services.CountdownService;
 import com.consultpal.android.utils.Constants;
 import com.consultpal.android.utils.DateUtils;
+import com.consultpal.android.utils.SharedPrefManager;
 import com.consultpal.android.utils.SimpleItemTouchHelperCallback;
 import com.consultpal.android.utils.SymptomListDividerDecorator;
 import com.google.android.gms.analytics.HitBuilders;
@@ -87,6 +88,8 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     private final long interval = 1 * 1000;
 
     CountDownTimer cdtInterval;
+    private SharedPrefManager sharedPrefManager;
+    private int mMaxNoOfBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,8 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         ButterKnife.bind(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         presenter = new SessionPresenter(this);
+        sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
+        mMaxNoOfBox = sharedPrefManager.getMaxNoOfProbBox();
         cdtInterval = new MyCountDownTimer(startTime, interval);
         if (savedInstanceState != null) {
             session = (Session) savedInstanceState.getSerializable(Constants.KEY_SESSION);
@@ -120,7 +125,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         symptomsRV.setHasFixedSize(true);
         symptomsRV.setLayoutManager(new LinearLayoutManager(this));
         symptomsRV.addItemDecoration(new SymptomListDividerDecorator(20));
-        adapter = new SymptomsRVAdapter(this, symptomsList, this);
+        adapter = new SymptomsRVAdapter(this, symptomsList, this, mMaxNoOfBox);
         symptomsRV.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
@@ -202,10 +207,13 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     }
 
     private void addInitialBoxes() {
-        symptomsList.add(new Symptom(null, 1));
-        symptomsList.add(new Symptom(null, 2));
+        for (int i = 1; i <= mMaxNoOfBox / 2; i++) {
+            symptomsList.add(new Symptom(null, i));
+        }
+
+       /* symptomsList.add(new Symptom(null, 2));
         symptomsList.add(new Symptom(null, 3));
-        symptomsList.add(new Symptom(null, 4));
+        symptomsList.add(new Symptom(null, 4));*/
     }
 
     public void addSymptomToDelete(Symptom symptomToDelete) {

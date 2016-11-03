@@ -26,4 +26,8 @@ public class Constants {
 
     //welcome
     public static final String DOCTOR_ID = "DOCTOR_ID";
+
+    //Shared Pref Constant
+    public static final String TIMES_IN_MINUTE = "timeInMinutes";
+    public static final String MAX_NO_OF_PROB_BOX = "maxNoOfProblemBoxes";
 }

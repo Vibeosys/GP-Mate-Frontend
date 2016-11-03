@@ -21,4 +21,6 @@ public interface DataService {
     void finishSession(long sessionId, String token);
 
     void updateAndFinishSession(long sessionId, String sessionToken, List<Symptom> symptoms, List<Symptom> deletedSymptoms);
+
+    void getConfig();
 }

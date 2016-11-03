@@ -1,5 +1,6 @@
 package com.consultpal.android.services;
 
+import com.consultpal.android.model.Configuration;
 import com.consultpal.android.model.Doctor;
 import com.consultpal.android.model.PracticePlace;
 import com.consultpal.android.model.rest.Session;
@@ -84,4 +85,7 @@ public interface ConsultPalAPI {
     @POST("medical-session/finish")
     Call<Session> finishSession(@Field("sessionId") long sessionId,
                                 @Field("token") String token);
+
+    @GET("practice-place/configurations")
+    Call<ArrayList<Configuration>> getConfig();
 }

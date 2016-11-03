@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.consultpal.android.R;
 import com.consultpal.android.listeners.OnStartDragListener;
 import com.consultpal.android.model.Symptom;
+import com.consultpal.android.utils.SharedPrefManager;
 import com.consultpal.android.views.SessionActivity;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class SymptomsRVAdapter extends RecyclerView.Adapter<SymptomsRVAdapter.Si
     private List<Symptom> mData;
     private final OnStartDragListener mDragStartListener;
     private boolean onBind;
+    private int maxNoOfBox;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout background_layout;
@@ -46,7 +48,7 @@ public class SymptomsRVAdapter extends RecyclerView.Adapter<SymptomsRVAdapter.Si
         }
     }
 
-    public SymptomsRVAdapter(Context context, List<Symptom> data, OnStartDragListener dragStartListener) {
+    public SymptomsRVAdapter(Context context, List<Symptom> data, OnStartDragListener dragStartListener, int maxNoOfBox) {
         mContext = context;
         if (data != null) {
             mData = new ArrayList<>(data);
@@ -54,6 +56,7 @@ public class SymptomsRVAdapter extends RecyclerView.Adapter<SymptomsRVAdapter.Si
             mData = new ArrayList<>();
         }
         mDragStartListener = dragStartListener;
+        this.maxNoOfBox = maxNoOfBox;
     }
 
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -139,7 +142,7 @@ public class SymptomsRVAdapter extends RecyclerView.Adapter<SymptomsRVAdapter.Si
     }
 
     public boolean addNewBox(int position) {
-        if (mData.size() < 8 && position == mData.size() - 1){
+        if (mData.size() < this.maxNoOfBox && position == mData.size() - 1) {
             mData.add(new Symptom(null, position + 1));
             notifyItemChanged(position + 1);
             return true;
@@ -147,7 +150,7 @@ public class SymptomsRVAdapter extends RecyclerView.Adapter<SymptomsRVAdapter.Si
         return false;
     }
 
-    public void deleteItem(int position){
+    public void deleteItem(int position) {
         // Can't delete all items from list
         if (mData.size() > 1) {
             // Add to symptomsToDelete before removing from List
@@ -176,7 +179,7 @@ public class SymptomsRVAdapter extends RecyclerView.Adapter<SymptomsRVAdapter.Si
     @Override
     public void onItemFinishedMoving() {
         // Update priorities after swap
-        for (int i=0; i< mData.size(); i++) {
+        for (int i = 0; i < mData.size(); i++) {
             mData.get(i).setPriority(i + 1);
         }
 

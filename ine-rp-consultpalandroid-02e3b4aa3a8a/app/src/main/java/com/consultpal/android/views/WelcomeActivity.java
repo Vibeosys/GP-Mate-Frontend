@@ -67,7 +67,7 @@ public class WelcomeActivity extends AppCompatActivity {
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
             selectedDoctorId = getIntent().getExtras().getLong(Constants.DOCTOR_ID);
         }
-
+        presenter.getConfig();
         if (session != null && session.getPracticePlace() != null) {
             Picasso.with(this)
                     .load(Constants.BASE_ENDPOINT_PICTURES + session.getPracticePlace().getImageProfileUrl())

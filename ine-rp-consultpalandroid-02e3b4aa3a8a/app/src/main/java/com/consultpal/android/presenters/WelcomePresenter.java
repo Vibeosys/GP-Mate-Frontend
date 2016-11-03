@@ -1,12 +1,17 @@
 package com.consultpal.android.presenters;
 
+import com.consultpal.android.model.Configuration;
 import com.consultpal.android.model.rest.Session;
 import com.consultpal.android.providers.BusProvider;
 import com.consultpal.android.services.DataService;
 import com.consultpal.android.services.RestService;
+import com.consultpal.android.utils.ConfigurationManager;
+import com.consultpal.android.utils.SharedPrefManager;
 import com.consultpal.android.views.WelcomeActivity;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
 
 /**
  * Created by ines on 5/25/16.
@@ -35,6 +40,11 @@ public class WelcomePresenter {
                 appointmentDate, doctorId);
     }
 
+    public void getConfig() {
+        DataService dataService = RestService.getInstance();
+        dataService.getConfig();
+    }
+
     @Subscribe
     public void onLogInResponse(Session session) {
         welcomeView.openSessionActivity(session);
@@ -44,6 +54,13 @@ public class WelcomePresenter {
     @Subscribe
     public void onLogInError(String errorMessage) {
         welcomeView.showErrorMsg(errorMessage);
+    }
+
+    @Subscribe
+    public void onConfigGet(ArrayList<Configuration> configurations) {
+        SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(welcomeView.getApplicationContext());
+        ConfigurationManager configurationManager = new ConfigurationManager(sharedPrefManager);
+        configurationManager.setValues(configurations);
     }
 
 }
