@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.consultpal.android.model.Symptom;
 import com.consultpal.android.model.rest.Notification;
 import com.consultpal.android.model.rest.NotificationType;
+import com.consultpal.android.model.rest.Session;
 import com.consultpal.android.providers.BusProvider;
 import com.consultpal.android.services.DataService;
 import com.consultpal.android.services.RestService;
@@ -25,7 +26,7 @@ public class SessionPresenter {
 
     private SessionActivity sessionView;
 
-    public SessionPresenter (SessionActivity view) {
+    public SessionPresenter(SessionActivity view) {
         this.sessionView = view;
     }
 
@@ -82,7 +83,7 @@ public class SessionPresenter {
         switch (notificationType) {
             case ALLOCATION:
                 sessionView.onAllocation(notification.getDoctorId(), firstName + surname,
-                        notification.getDoctorPicture(),notification.getDoctorDescription());
+                        notification.getDoctorPicture(), notification.getDoctorDescription());
                 break;
             case MESSAGE:
                 sessionView.onMsgReceived(notification.getPracticePlaceId(), notification.getPracticeName(),
@@ -92,5 +93,12 @@ public class SessionPresenter {
         }
 
 
+    }
+
+    @Subscribe
+    public void sessionTimeOut(Session session) {
+        if (!session.isOpen()) {
+            sessionView.sessionTimeOut();
+        }
     }
 }

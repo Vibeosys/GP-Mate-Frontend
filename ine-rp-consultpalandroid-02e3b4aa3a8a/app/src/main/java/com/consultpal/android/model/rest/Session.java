@@ -30,7 +30,8 @@ public class Session implements Serializable {
     private List<Symptom> symptoms;
     @SerializedName("token")
     private String token;
-
+    @SerializedName("open")
+    private boolean open;
     private long appointmentDate;
 
     public Session() {
@@ -120,5 +121,13 @@ public class Session implements Serializable {
 
     public void setAppointmentDate(long appointmentDate) {
         this.appointmentDate = appointmentDate;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 }

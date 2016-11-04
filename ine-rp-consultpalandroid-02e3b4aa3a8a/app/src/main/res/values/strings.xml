@@ -109,6 +109,9 @@
 
     <!-- Session screen -->
     <string name="time_interval_dialog_title">Running time</string>
-    <string name="time_interval_dialog_msg">You want to continue with the application? You are inactive for last 2 minute</string>
+    <string name="time_interval_dialog_msg">You want to continue with the application? You are
+        inactive for last 2 minute</string>
+    <string name="session_time_out">Session Time Out</string>
+    <string name="session_time_out_msg">Your session is time out you can not chat further.</string>
 </resources>
 

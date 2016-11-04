@@ -22,6 +22,6 @@
     <dimen name="select_prev_switch_padding">14dp</dimen>
 
     <dimen name="finish_screen_text_size">24sp</dimen>
-    <dimen name="spinner_text_size">26sp</dimen>
+    <dimen name="spinner_text_size">24sp</dimen>
     <bool name="is_tab">true</bool>
 </resources>

@@ -46,7 +46,7 @@ public class CountdownService extends Service {
         super.onCreate();
         sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
         int maxMin = sharedPrefManager.getTimesInMin();
-        cdt = new CountDownTimer(minuteInMillis * maxMin, 1000) {
+        cdt = new CountDownTimer(minuteInMillis * 1, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 

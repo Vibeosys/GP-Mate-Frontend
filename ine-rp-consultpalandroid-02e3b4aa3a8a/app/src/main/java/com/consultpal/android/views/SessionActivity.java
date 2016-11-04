@@ -326,6 +326,22 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         builder.show();
     }
 
+    public void sessionTimeOut() {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.session_time_out));
+        builder.setMessage(getResources().getString(R.string.session_time_out_msg));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteMessagingInstanceId(); // Clear Messaging token for next user
+                stopService(new Intent(SessionActivity.this, CountdownService.class));
+                openFinishActivity();
+            }
+        });
+        builder.show();
+    }
+
     private void openFinishActivity() {
         Intent intent = new Intent(SessionActivity.this, FinishActivity.class);
         intent.putExtra(Constants.LOG_IN_EXTRA_SESSION, session);
