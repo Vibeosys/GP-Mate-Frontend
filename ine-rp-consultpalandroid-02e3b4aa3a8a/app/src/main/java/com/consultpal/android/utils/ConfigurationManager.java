@@ -39,6 +39,14 @@ public class ConfigurationManager {
 
                 }
             }
+            else if (key.equals(Constants.GENERIC_EMAIL_ID)) {
+                try {
+                    this.sharedPrefManager.setGenericEmailId(configuration.getValue());
+                }  catch (Exception e) {
+                    Log.e(TAG, "Exception durin");
+                }
+            }
+
         }
     }
 }

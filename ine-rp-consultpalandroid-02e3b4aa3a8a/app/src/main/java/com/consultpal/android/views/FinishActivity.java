@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.DatePicker;
@@ -26,6 +28,7 @@ import com.consultpal.android.model.Patient;
 import com.consultpal.android.model.rest.Session;
 import com.consultpal.android.utils.Constants;
 import com.consultpal.android.utils.GMailSender;
+import com.consultpal.android.utils.SharedPrefManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
@@ -73,10 +76,21 @@ public class FinishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_finish);
         ButterKnife.bind(this);
         mCalendar = Calendar.getInstance();
-        mSenderEmail ="senderemail@gmail.com";
-        mSenderPassword = "pwd";
-        mReceiverEmailId="receiver@vibeosys.com";
-        mSender = new GMailSender(mSenderEmail,mSenderPassword);
+        SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
+        String emailIdId = sharedPrefManager.getGenericEmailId();
+        if(!TextUtils.isEmpty(emailIdId))
+        {
+            if(Patterns.EMAIL_ADDRESS.matcher(emailIdId).matches())
+            {
+                mReceiverEmailId= emailIdId;
+                mSenderEmail ="senderemail@gmail.com";
+                mSenderPassword = "pwd";
+                mReceiverEmailId= emailIdId;
+                mSender = new GMailSender(mSenderEmail,mSenderPassword);
+            }
+
+        }
+
         if (getIntent() != null && getIntent().hasExtra(Constants.LOG_IN_EXTRA_SESSION)) {
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
         }
@@ -203,7 +217,7 @@ public class FinishActivity extends AppCompatActivity {
 
     /*Show Date on TextView*/
     private void showDateOnTextView() {
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         selectDate.setText(sdf.format(mCalendar.getTime()));
         selectDate.setHint(getResources().getString(R.string.select_date_hint));
@@ -222,11 +236,10 @@ public class FinishActivity extends AppCompatActivity {
     class MyAsyncClass extends AsyncTask<String, Void, Void> {
 
         ProgressDialog pDialog;
-     Patient mPatient= session.getPatient();
-        String customerName =mPatient.getName()+mPatient.getLastName();
+        Patient mPatient= session.getPatient();
+        String customerName =mPatient.getName()+"\t"+mPatient.getLastName();
         String customerEmailId = mPatient.getEmail();
-        /*String customerName ="Dummy Name";
-        String customerEmailId = "Dummy email Id";*/
+
         String customerAppointmentDateTime = selectDate.getText()+" "+selectTime.getText();
         @Override
         protected void onPreExecute() {
@@ -314,13 +327,18 @@ public class FinishActivity extends AppCompatActivity {
                 String email = mApi[0];
 
                 // Add subject, Body, your mail Id, and receiver mail Id.
+                if(mSender!=null)
                 mSender.sendMail(getResources().getString(R.string.app_name), htmlCode, mSenderEmail,email );
 //sender emailid and receviver emailid
+                else
+                {
+                    Log.d("TAG","EmailId is Null");
+                }
 
             }
 
             catch (Exception ex) {
-
+                Log.d("TAG","Email sending exception");
             }
             return null;
         }
@@ -328,6 +346,7 @@ public class FinishActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            if(pDialog.isShowing())
             pDialog.cancel();
             Toast toast=Toast.makeText(getApplicationContext(), getResources().getString(R.string.set_appointment_msg), Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER,0,0);

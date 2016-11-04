@@ -14,8 +14,10 @@ public class Patient implements Serializable {
     @SerializedName("name")
     private String name;
     @SerializedName("lastname")
-    private String email;
     private String lastName;
+    @SerializedName("email")
+    private String email;
+
     @SerializedName("dateOfBirth")
     private long dateOfBirth;
 

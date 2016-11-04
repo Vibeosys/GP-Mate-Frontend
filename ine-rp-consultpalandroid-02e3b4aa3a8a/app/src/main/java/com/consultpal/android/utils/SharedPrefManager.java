@@ -43,10 +43,24 @@ public class SharedPrefManager {
     public void setMaxNoOfProbBox(int value) {
         setIntValuesInSharedPrefs(Constants.MAX_NO_OF_PROB_BOX, value);
     }
+    public String getGenericEmailId()
+    {
+        return mProjectSharedPref.getString(Constants.GENERIC_EMAIL_ID, null);
+    }
+    public void setGenericEmailId(String emailId)
+    {
+        SetStringValuesInSharedPrefs(Constants.GENERIC_EMAIL_ID,emailId);
+    }
 
     private static void setIntValuesInSharedPrefs(String sharedPrefKey, int sharedPrefValue) {
         SharedPreferences.Editor editor = mProjectSharedPref.edit();
         editor.putInt(sharedPrefKey, sharedPrefValue);
+        editor.apply();
+    }
+    private static void SetStringValuesInSharedPrefs(String sharedPrefKey,String sharedPrefValue )
+    {
+        SharedPreferences.Editor editor = mProjectSharedPref.edit();
+        editor.putString(sharedPrefKey, sharedPrefValue);
         editor.apply();
     }
 }
