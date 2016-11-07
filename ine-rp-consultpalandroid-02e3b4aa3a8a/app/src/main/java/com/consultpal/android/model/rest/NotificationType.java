@@ -6,6 +6,6 @@ package com.consultpal.android.model.rest;
 public enum NotificationType {
 
     ALLOCATION,
-    MESSAGE
+    MESSAGE, DEALLOCATION
 
 }

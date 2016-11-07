@@ -90,6 +90,11 @@ public class SessionPresenter {
                         notification.getDoctorId(), firstName + surname, notification.getMessage(),
                         notification.getDateSent());
                 break;
+            case DEALLOCATION:
+                //TODO the event of de allocation doctor
+                break;
+            default:
+                break;
         }
 
 
