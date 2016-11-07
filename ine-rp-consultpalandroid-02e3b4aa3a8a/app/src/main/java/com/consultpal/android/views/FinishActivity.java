@@ -83,9 +83,9 @@ public class FinishActivity extends AppCompatActivity {
             if(Patterns.EMAIL_ADDRESS.matcher(emailIdId).matches())
             {
                 mReceiverEmailId= emailIdId;
-                mSenderEmail ="senderemail@gmail.com";
-                mSenderPassword = "pwd";
-                mReceiverEmailId= emailIdId;
+                mSenderEmail ="gpmateapp@gmail.com";
+                mSenderPassword = "dummyPassword";
+                //mReceiverEmailId= "@vibe.com";
                 mSender = new GMailSender(mSenderEmail,mSenderPassword);
             }
 
@@ -248,6 +248,10 @@ public class FinishActivity extends AppCompatActivity {
             pDialog = new ProgressDialog(FinishActivity.this);
             pDialog.setMessage(getResources().getString(R.string.please_wait_msg));
             pDialog.show();
+            if(TextUtils.isEmpty(customerEmailId)||customerEmailId.equals(null))
+            {
+                customerEmailId=getResources().getString(R.string.email_not_given);
+            }
 
         }
 
@@ -259,24 +263,18 @@ public class FinishActivity extends AppCompatActivity {
                 String htmlCode="<html>\n" +
                         "<head>\n" +
                         "<style> \n" +
-                        "    @media only screen and (max-width:620px;){\n" +
-                        "        .content{\n" +
-                        "            height: 60px;\n" +
-                        "        }\n" +
-                        "    }\n" +
-                        "    @media only screen and (min-width:620px){\n" +
+                        "   \n" +
                         "        .content{\n" +
                         "            height: 40px;\n" +
-                        "        }\n" +
                         "    }\n" +
                         "</style>\n" +
                         "</head>\n" +
                         "<body>\n" +
-                        "<table class=\"table\" style=\"border: 2px solid #b9b6b6;padding: 0px 0px 10px 0px;text-align: left;\">\n" +
-                        "  <thead style=\"background: #4DB6AC;\">\n" +
+                        "<table class=\"table\" style=\"border: 2px solid #b9b6b6;padding: 0px 0px 0px 0px;text-align: left; width:100%;\">\n" +
+                        "  <thead style=\"background: #E41118;\">\n" +
                         "    <tr>\n" +
-                        "      <th colspan=\"3\" style=\"padding: 10px 10px 10px 10px;color:#fff;\">\n" +
-                        "          <div> Consult pal Application</div>\n" +
+                        "      <th style=\"padding: 10px 10px 10px 10px;color:#fff;\">\n" +
+                        "          <div> GP Mate Application - Patient Information</div>\n" +
                         "         </th>\n" +
                         "    </tr>\n" +
                         "     \n" +
@@ -284,32 +282,27 @@ public class FinishActivity extends AppCompatActivity {
                         "  <tbody>\n" +
                         "    <tr>\n" +
                         "     \n" +
-                        "      <td style=\"padding: 7px 10px 4px 10px;\">\n" +
-                        "          <div>\n" +
-                        "          <div style=\"width:70px;display:inline-block\">\n" +
-                        "              Customer Name</div>\n" +
-                        "              <div style=\"width:15px;display:inline-block;\">:</div>\n" +
-                        "              <div style=\"display:inline-block;\">"+""+customerName+"</div>\n" +
-                        "          </div> </td>\n" +
+                        "      <td style=\"padding: 7px 10px 4px 10px;background: #f5f5f5;\">\n" +
+                        "           <div style=\"display:inline-block\"> \n" +
+                        "        <div style=\"display:block;width:150px;font-weight:700;\">Patient Name </div>\n" +
+                        "        <div class=\"content\" style=\"display:block\">"+""+customerName+"</div>\n" +
+                        "          </div>\n" +
                         "     \n" +
                         "    </tr>\n" +
                         "    <tr>\n" +
-                        "        <td style=\"padding: 0px 10px 4px 10px;\">\n" +
-                        "     <div>\n" +
-                        "          <div style=\"width:70px;display:inline-block\">\n" +
-                        "              Customer EmailId</div>\n" +
-                        "              <div style=\"width:15px;display:inline-block;\">:</div>\n" +
-                        "              <div style=\"display:inline-block;\">"+""+customerEmailId+"</div>\n" +
+                        "        <td style=\"padding: 7px 10px 4px 10px;background: #fff;\">\n" +
+                        "             <div style=\"display:inline-block\"> \n" +
+                        "    <div style=\"display:block;width:150px;font-weight:700;\">Patient Email Id </div>\n" +
+                        "        <div class=\"content\" style=\"display:block\">"+""+customerEmailId+"</div>\n" +
                         "          </div>\n" +
                         "      </td>\n" +
                         "\n" +
                         "    </tr>\n" +
                         "    <tr>\n" +
-                        "      <td colspan=\"3\" style=\"padding: 7px 10px 4px 10px;background: #f5f5f5;\">\n" +
-                        "    <div > \n" +
-                        "        <div>Customer Appointment Date</div>\n" +
-                        "        <div><hr style=\"margin-top: 4px;border: 1px solid #efeeee;\"></div>\n" +
-                        "        <div class=\"content\">"+""+customerAppointmentDateTime+"</div>\n" +
+                        "      <td style=\"padding: 7px 10px 4px 10px;background: #f5f5f5;\">\n" +
+                        "    <div style=\"display:inline-block\"> \n" +
+                        "        <div style=\"display:block;font-weight:700;\">Requested Appointment Date and Time </div>\n" +
+                        "        <div class=\"content\" style=\"display:block\">"+""+customerAppointmentDateTime+"</div>\n" +
                         "          </div>\n" +
                         "        </td>\n" +
                         "\n" +
@@ -328,7 +321,7 @@ public class FinishActivity extends AppCompatActivity {
 
                 // Add subject, Body, your mail Id, and receiver mail Id.
                 if(mSender!=null)
-                mSender.sendMail(getResources().getString(R.string.app_name), htmlCode, mSenderEmail,email );
+                mSender.sendMail(getResources().getString(R.string.email_subject), htmlCode, mSenderEmail,email );
 //sender emailid and receviver emailid
                 else
                 {

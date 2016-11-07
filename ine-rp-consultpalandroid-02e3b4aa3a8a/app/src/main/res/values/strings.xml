@@ -93,7 +93,8 @@
     <string name="select_date_hint">Date Selected</string>
     <string name="set_appointment_msg">Thank you for using GP Mate</string>
     <string name="please_wait_msg">Please wait...</string>
-
+    <string name="email_subject">Appointment request</string>
+    <string name="email_not_given">Not given</string>
 
     <!-- Select date for appointment -->
     <string name="prev_appoint_date_hint">Appointment Date</string>
