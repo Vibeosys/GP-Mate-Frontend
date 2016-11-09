@@ -339,7 +339,9 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
                 openFinishActivity();
             }
         });
+        builder.setCancelable(false);/*To disable back button or background click event*/
         builder.show();
+
     }
 
     private void openFinishActivity() {
