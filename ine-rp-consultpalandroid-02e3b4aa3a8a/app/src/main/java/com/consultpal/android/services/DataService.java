@@ -22,5 +22,5 @@ public interface DataService {
 
     void updateAndFinishSession(long sessionId, String sessionToken, List<Symptom> symptoms, List<Symptom> deletedSymptoms);
 
-    void getConfig();
+    void getConfig(String practicePlaceUserId);
 }

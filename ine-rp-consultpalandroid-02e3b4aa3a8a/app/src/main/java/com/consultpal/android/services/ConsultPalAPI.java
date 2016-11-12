@@ -86,6 +86,6 @@ public interface ConsultPalAPI {
     Call<Session> finishSession(@Field("sessionId") long sessionId,
                                 @Field("token") String token);
 
-    @GET("practice-place/configurations")
-    Call<ArrayList<Configuration>> getConfig();
+    @GET("practice-place/configurations/{practiceId}")
+    Call<ArrayList<Configuration>> getConfig(@Path(value = "practiceId") String practicePlaceUserId);
 }

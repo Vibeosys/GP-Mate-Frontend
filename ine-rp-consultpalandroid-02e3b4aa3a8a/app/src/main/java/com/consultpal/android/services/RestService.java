@@ -99,8 +99,8 @@ public class RestService implements DataService {
     }
 
     @Override
-    public void getConfig() {
-        Call<ArrayList<Configuration>> response = consultPalAPI.getConfig();
+    public void getConfig(String practicePlaceUserId) {
+        Call<ArrayList<Configuration>> response = consultPalAPI.getConfig(practicePlaceUserId);
         response.enqueue(new Callback<ArrayList<Configuration>>() {
             @Override
             public void onResponse(Call<ArrayList<Configuration>> call, Response<ArrayList<Configuration>> response) {

@@ -40,9 +40,9 @@ public class WelcomePresenter {
                 appointmentDate, doctorId);
     }
 
-    public void getConfig() {
+    public void getConfig(String practicePlaceUserId) {
         DataService dataService = RestService.getInstance();
-        dataService.getConfig();
+        dataService.getConfig(practicePlaceUserId);
     }
 
     @Subscribe
