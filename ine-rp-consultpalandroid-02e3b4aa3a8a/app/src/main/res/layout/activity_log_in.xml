@@ -24,7 +24,7 @@
             android:layout_marginTop="@dimen/log_in_logo_vertical_margin"
             android:layout_marginBottom="@dimen/log_in_logo_vertical_margin"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/logo_icon"/>
+            android:src="@drawable/new_icon_image"/>
 
 
         <android.support.v7.widget.CardView
