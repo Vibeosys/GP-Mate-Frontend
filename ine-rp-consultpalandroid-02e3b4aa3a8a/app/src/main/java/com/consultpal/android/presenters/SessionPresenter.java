@@ -92,6 +92,7 @@ public class SessionPresenter {
                 break;
             case DEALLOCATION:
                 //TODO the event of de allocation doctor
+                sessionView.onAllocationOfPracticeId();
                 break;
             default:
                 break;

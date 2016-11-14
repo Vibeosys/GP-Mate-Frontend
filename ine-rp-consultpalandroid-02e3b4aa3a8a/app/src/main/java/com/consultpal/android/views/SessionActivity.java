@@ -35,6 +35,7 @@ import com.consultpal.android.adapters.SymptomsRVAdapter;
 import com.consultpal.android.listeners.OnStartDragListener;
 import com.consultpal.android.model.Doctor;
 import com.consultpal.android.model.Message;
+import com.consultpal.android.model.PracticeLogged;
 import com.consultpal.android.model.Symptom;
 import com.consultpal.android.model.rest.Session;
 import com.consultpal.android.presenters.SessionPresenter;
@@ -448,6 +449,27 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         });
     }
 
+    public void onAllocationOfPracticeId()
+    {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (session.getPracticePlace()!= null) {
+                    if (!TextUtils.isEmpty(session.getPracticePlace().getDescription())) {
+                        topMessageTV.setText(session.getPracticePlace().getDescription());
+                    } else {
+                        topMessageTV.setText(getString(R.string.session_top_message_doctor, session.getPracticePlace().getPracticeId()));
+                    }
+                    // If doctor has picture, update imageview
+                    if (!TextUtils.isEmpty(session.getDoctor().getImageProfileUrl())) {
+                        setPracticeImageView(Constants.BASE_ENDPOINT_PICTURES + session.getPracticePlace().getImageProfileUrl());
+                    }
+                }
+            }
+        });
+
+    }
+
     public void onMsgReceived(final Long practicePlaceId, final String practiceName,
                               final Long doctorId, final String doctorName, final String message,
                               final long dateSent) {
@@ -472,6 +494,8 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         session.setDoctor(doctor);
         setTopLayout();
     }
+
+
 
     private void showNewMessage(String name, String message, long dateSent) {
 
