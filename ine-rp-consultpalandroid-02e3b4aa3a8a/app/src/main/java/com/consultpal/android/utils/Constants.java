@@ -36,5 +36,5 @@ public class Constants {
     //Shared Pref Constant
     public static final String TIMES_IN_MINUTE = "timeInMinutes";
     public static final String MAX_NO_OF_PROB_BOX = "maxNoOfProblemBoxes";
-    public static final String GENERIC_EMAIL_ID="genericPracticeEmail";
+    public static final String GENERIC_EMAIL_ID="genericEmailAddress";
 }
