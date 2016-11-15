@@ -449,12 +449,11 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         });
     }
 
-    public void onAllocationOfPracticeId()
-    {
+    public void onAllocationOfPracticeId() {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                if (session.getPracticePlace()!= null) {
+                if (session.getPracticePlace() != null) {
                     if (!TextUtils.isEmpty(session.getPracticePlace().getDescription())) {
                         topMessageTV.setText(session.getPracticePlace().getDescription());
                     } else {
@@ -494,7 +493,6 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         session.setDoctor(doctor);
         setTopLayout();
     }
-
 
 
     private void showNewMessage(String name, String message, long dateSent) {
@@ -549,8 +547,14 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         @Override
         public void onFinish() {
             //2 min time interval dialog
-            showErrorDialog(getResources().getString(R.string.time_interval_dialog_title),
-                    getResources().getString(R.string.time_interval_dialog_msg));
+            boolean isTablet = getResources().getBoolean(R.bool.is_tab);
+            if (isTablet) {
+                sessionTimeOut();
+            } else {
+                showErrorDialog(getResources().getString(R.string.time_interval_dialog_title),
+                        getResources().getString(R.string.time_interval_dialog_msg));
+            }
+
            /* Toast.makeText(getApplicationContext(), "2 mins you dont have any updates",
                     Toast.LENGTH_LONG).show();*/
         }
