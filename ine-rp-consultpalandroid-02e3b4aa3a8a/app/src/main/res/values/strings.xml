@@ -109,7 +109,7 @@
 
 
     <!-- Session screen -->
-    <string name="time_interval_dialog_title">Running time</string>
+    <string name="time_interval_dialog_title">Time is Running</string>
     <string name="time_interval_dialog_msg">You want to continue with the application? You are
         inactive for last 2 minute</string>
     <string name="session_time_out">Session Time Out</string>
