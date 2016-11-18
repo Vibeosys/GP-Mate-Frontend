@@ -56,7 +56,7 @@ public class DoctorSpinnerAdapter extends BaseAdapter {
         } else
             viewHolder = (ViewHolder) convertView.getTag();
         Doctor doctor = doctors.get(position);
-        viewHolder.spinnerChild.setText(doctor.getName());
+        viewHolder.spinnerChild.setText(doctor.getName() + " " + doctor.getLastName());
 
         return row;
     }

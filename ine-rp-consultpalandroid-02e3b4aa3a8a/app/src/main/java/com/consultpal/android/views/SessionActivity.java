@@ -121,7 +121,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         if (isTablet) {
             countdownTV.setVisibility(View.VISIBLE);
         } else {
-            countdownTV.setVisibility(View.INVISIBLE);
+            countdownTV.setVisibility(View.GONE);
         }
         symptomsRV.setHasFixedSize(true);
         symptomsRV.setLayoutManager(new LinearLayoutManager(this));

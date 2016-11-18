@@ -65,13 +65,13 @@
         <RelativeLayout
             android:id="@+id/session_messages_layout"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
                 android:id="@+id/session_messages"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/session_button_bg"
                 android:clickable="true"
                 android:drawableTop="@drawable/ic_message_white_24dp"
@@ -96,7 +96,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
@@ -118,7 +118,7 @@
             <TextView
                 android:id="@+id/session_help_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/session_button_bg"
                 android:gravity="center"
                 android:padding="10dp"
