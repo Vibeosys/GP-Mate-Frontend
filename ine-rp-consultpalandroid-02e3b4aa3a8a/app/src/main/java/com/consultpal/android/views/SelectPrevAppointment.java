@@ -29,10 +29,10 @@ import butterknife.OnClick;
 
 public class SelectPrevAppointment extends AppCompatActivity {
 
-    @Bind(R.id.prev_appoint_swt)
-    Switch isPrevAppointment;
-    @Bind(R.id.prev_appoint_txt_msg)
-    TextView appointmentMsgTV;
+    /*@Bind(R.id.prev_appoint_swt)
+    Switch isPrevAppointment;*/
+   /* @Bind(R.id.prev_appoint_txt_msg)
+    TextView appointmentMsgTV;*/
     @Bind(R.id.prev_appoint_date_edt)
     EditText dateET;
     @Bind(R.id.prev_appoint_time_edt)
@@ -45,7 +45,7 @@ public class SelectPrevAppointment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_prev_appointment);
         ButterKnife.bind(this);
-        isPrevAppointment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       /* isPrevAppointment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -54,7 +54,7 @@ public class SelectPrevAppointment extends AppCompatActivity {
                     appointmentMsgTV.setText(getResources().getString(R.string.prev_appoint_message));
                 }
             }
-        });
+        });*/
     }
 
     @OnClick(R.id.prev_appoint_date_edt)

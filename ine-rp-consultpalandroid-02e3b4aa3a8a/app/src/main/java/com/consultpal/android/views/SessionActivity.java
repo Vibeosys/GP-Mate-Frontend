@@ -1,6 +1,7 @@
 package com.consultpal.android.views;
 
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -114,7 +115,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         if (getIntent() != null && getIntent().hasExtra(Constants.LOG_IN_EXTRA_SESSION)) {
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
         }
-
+        showInfoDialog();
         setTopLayout();
 
         boolean isTablet = getResources().getBoolean(R.bool.is_tab);
@@ -136,7 +137,6 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         // Obtain the shared Tracker instance.
         ConsultPalApp application = (ConsultPalApp) getApplication();
         mTracker = application.getDefaultTracker();
-
     }
 
     @Override
@@ -588,5 +588,19 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
             }
         });
         builder.show();
+    }
+
+    private void showInfoDialog() {
+        final Dialog infoDialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        infoDialog.setContentView(R.layout.activity_splash_screen);
+        ImageView imgClose = (ImageView) infoDialog.findViewById(R.id.imgClose);
+        imgClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                infoDialog.dismiss();
+            }
+        });
+
+        infoDialog.show();
     }
 }

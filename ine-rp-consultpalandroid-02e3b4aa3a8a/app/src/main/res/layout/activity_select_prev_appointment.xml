@@ -48,23 +48,33 @@
                 android:paddingRight="20dp"
                 android:paddingTop="@dimen/log_in_form_vertical_padding">
 
-                <Switch
+                <!--<Switch
                     android:id="@+id/prev_appoint_swt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/log_in_fields_bottom_margin"
                     android:text="@string/prev_appoint_is_taken"
                     android:textColor="#242424"
-                    android:textSize="@dimen/session_top_text_size" />
+                    android:textSize="@dimen/session_top_text_size" />-->
 
                 <TextView
+                    android:id="@+id/prev_appoint_swt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/log_in_fields_bottom_margin"
+                    android:text="@string/prev_appoint_is_taken"
+                    android:textColor="#242424"
+                    android:textSize="@dimen/session_top_text_size"
+                    android:textStyle="bold" />
+
+                <!--<TextView
                     android:id="@+id/prev_appoint_txt_msg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/log_in_fields_bottom_margin"
                     android:text="@string/prev_appoint_message"
                     android:textColor="#242424"
-                    android:textSize="@dimen/session_top_text_size" />
+                    android:textSize="@dimen/session_top_text_size" />-->
 
                 <EditText
                     android:id="@+id/prev_appoint_date_edt"

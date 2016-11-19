@@ -1,5 +1,6 @@
 package com.consultpal.android.views;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -204,4 +205,5 @@ public class WelcomeActivity extends AppCompatActivity {
     public void showErrorMsg(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+
 }

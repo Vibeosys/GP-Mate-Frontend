@@ -17,6 +17,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -48,28 +50,33 @@ public class FinishActivity extends AppCompatActivity {
 
     @Bind(R.id.finish_picture)
     ImageView picture;
-    @Bind(R.id.email_notification_choice)
-    Switch userNotification;
-    @Bind(R.id.select_date)
+    /* @Bind(R.id.email_notification_choice)
+     Switch userNotification;*/
+    /*@Bind(R.id.select_date)
     TextView selectDate;
     @Bind(R.id.select_time)
-    TextView selectTime;
+    TextView selectTime;*/
     @Bind(R.id.next_appointment_button)
     TextView nextAppointment;
     @Bind(R.id.next_appointment_bottom_layout)
     LinearLayout selectNextAppointment;
     @Bind(R.id.finish_exit_button)
     TextView finishButton;
-    @Bind(R.id.date_underline)
+    /*@Bind(R.id.date_underline)
     View dateUnderline;
     @Bind(R.id.time_underline)
-    View timeUnderline;
+    View timeUnderline;*/
+    @Bind(R.id.txt_msg_layout)
+    LinearLayout layoutMsg;
+    @Bind(R.id.email_msg)
+    EditText txtMsg;
 
     private Session session;
     private Tracker mTracker;
     private Calendar mCalendar;
-    private String mSenderEmail,mSenderPassword,mReceiverEmailId;
+    private String mSenderEmail, mSenderPassword, mReceiverEmailId, msg;
     GMailSender mSender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,19 +85,16 @@ public class FinishActivity extends AppCompatActivity {
         mCalendar = Calendar.getInstance();
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
         String emailIdId = sharedPrefManager.getGenericEmailId();
-        if(!TextUtils.isEmpty(emailIdId))
-        {
-            if(Patterns.EMAIL_ADDRESS.matcher(emailIdId).matches())
-            {
-                mReceiverEmailId= emailIdId;
-                mSenderEmail ="gpmateapp@gmail.com";
+        if (!TextUtils.isEmpty(emailIdId)) {
+            if (Patterns.EMAIL_ADDRESS.matcher(emailIdId).matches()) {
+                mReceiverEmailId = emailIdId;
+                mSenderEmail = "gpmateapp@gmail.com";
                 mSenderPassword = "dummyPassword";
                 //mReceiverEmailId= "@vibe.com";
-                mSender = new GMailSender(mSenderEmail,mSenderPassword);
+                mSender = new GMailSender(mSenderEmail, mSenderPassword);
             }
 
         }
-
         if (getIntent() != null && getIntent().hasExtra(Constants.LOG_IN_EXTRA_SESSION)) {
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
         }
@@ -117,42 +121,34 @@ public class FinishActivity extends AppCompatActivity {
     }
 
     /*Switch button event and visibility set for button*/
-    @OnCheckedChanged(R.id.email_notification_choice)
+  /*  @OnCheckedChanged(R.id.email_notification_choice)
     public void onClickSwitchButton(boolean checked) {
         if (checked) {
-            selectDate.setVisibility(View.VISIBLE);
-            selectTime.setVisibility(View.VISIBLE);
             selectNextAppointment.setVisibility(View.VISIBLE);
-            timeUnderline.setVisibility(View.VISIBLE);
-            dateUnderline.setVisibility(View.VISIBLE);
             finishButton.setVisibility(View.GONE);
 
         } else if (checked == false) {
-            selectDate.setVisibility(View.GONE);
-            selectTime.setVisibility(View.GONE);
             selectNextAppointment.setVisibility(View.GONE);
-            timeUnderline.setVisibility(View.GONE);
-            dateUnderline.setVisibility(View.GONE);
             finishButton.setVisibility(View.VISIBLE);
         }
 
 
-    }
+    }*/
 
-    /*Text View Select Date event*/
+   /* *//*Text View Select Date event*//*
     @OnClick(R.id.select_date)
     public void onSelectDate() {
         new DatePickerDialog(this, date, mCalendar
                 .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
                 mCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
-    }
+    }*/
 
     /*Text View Select Time event*/
-    @OnClick(R.id.select_time)
+   /* @OnClick(R.id.select_time)
     public void onSelectTime() {
-        mCalendar=Calendar.getInstance();
-        int hour= mCalendar.get(Calendar.HOUR_OF_DAY);
+        mCalendar = Calendar.getInstance();
+        int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
         int minute = mCalendar.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
         mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
@@ -171,21 +167,45 @@ public class FinishActivity extends AppCompatActivity {
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
 
+    }*/
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch (view.getId()) {
+            case R.id.radio_yes:
+                if (checked) {
+                    selectNextAppointment.setVisibility(View.VISIBLE);
+                    layoutMsg.setVisibility(View.VISIBLE);
+                    finishButton.setVisibility(View.GONE);
+                }
+                break;
+            case R.id.radio_no:
+                if (checked) {
+                    selectNextAppointment.setVisibility(View.GONE);
+                    layoutMsg.setVisibility(View.GONE);
+                    finishButton.setVisibility(View.VISIBLE);
+                }
+                break;
+        }
     }
 
     /*Fix Appointment Button Click Event*/
     @OnClick(R.id.next_appointment_button)
-    public void nextAppointmentButton()
-    {
+    public void nextAppointmentButton() {
         /*To check whether user have selected next appointment Date or not*/
-        if(selectDate.getHint().toString().equals(getResources().getString(R.string.exit_screen_date)))
-        {
+      /*  if (txtMsg.getHint().toString().equals(getResources().getString(R.string.exit_screen_date))) {
             showErrorDialog(getString(R.string.date_validation_message));
         }
-        /*To check whether user have selected next appointment Time or not*/
-        else if(selectTime.getHint().toString().equals(getResources().getString(R.string.exit_screen_time)))
-        {
+        *//*To check whether user have selected next appointment Time or not*//*
+        else if (selectTime.getHint().toString().equals(getResources().getString(R.string.exit_screen_time))) {
             showErrorDialog(getString(R.string.time_validation_message));
+        }*/
+        msg = txtMsg.getText().toString();
+        if (TextUtils.isEmpty(msg)) {
+            showErrorDialog(getString(R.string.msg_error_validation));
         }
         /*Date and Time Validations are Done*/
         else {
@@ -202,7 +222,7 @@ public class FinishActivity extends AppCompatActivity {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
-    /*Function for Date Picker*/
+   /* *//*Function for Date Picker*//*
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -213,15 +233,16 @@ public class FinishActivity extends AppCompatActivity {
             mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             showDateOnTextView();
         }
-    };
+    };*/
 
-    /*Show Date on TextView*/
+   /* *//*Show Date on TextView*//*
     private void showDateOnTextView() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         selectDate.setText(sdf.format(mCalendar.getTime()));
         selectDate.setHint(getResources().getString(R.string.select_date_hint));
-        }
+    }*/
+
     /*Error message dialog*/
     public void showErrorDialog(String message) {
         AlertDialog.Builder builder =
@@ -232,15 +253,16 @@ public class FinishActivity extends AppCompatActivity {
         builder.show();
     }
 
-/*Inner class for sending email to call GmailSender*/
+    /*Inner class for sending email to call GmailSender*/
     class MyAsyncClass extends AsyncTask<String, Void, Void> {
 
         ProgressDialog pDialog;
-        Patient mPatient= session.getPatient();
-        String customerName =mPatient.getName()+"\t"+mPatient.getLastName();
+        Patient mPatient = session.getPatient();
+        String customerName = mPatient.getName() + "\t" + mPatient.getLastName();
         String customerEmailId = mPatient.getEmail();
 
-        String customerAppointmentDateTime = selectDate.getText()+" "+selectTime.getText();
+        // String customerAppointmentDateTime = selectDate.getText() + " " + selectTime.getText();
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -248,9 +270,8 @@ public class FinishActivity extends AppCompatActivity {
             pDialog = new ProgressDialog(FinishActivity.this);
             pDialog.setMessage(getResources().getString(R.string.please_wait_msg));
             pDialog.show();
-            if(TextUtils.isEmpty(customerEmailId)||customerEmailId.equals(null))
-            {
-                customerEmailId=getResources().getString(R.string.email_not_given);
+            if (TextUtils.isEmpty(customerEmailId) || customerEmailId.equals(null)) {
+                customerEmailId = getResources().getString(R.string.email_not_given);
             }
 
         }
@@ -260,7 +281,7 @@ public class FinishActivity extends AppCompatActivity {
             try {
 
 
-                String htmlCode="<html>\n" +
+                String htmlCode = "<html>\n" +
                         "<head>\n" +
                         "<style> \n" +
                         "   \n" +
@@ -285,7 +306,7 @@ public class FinishActivity extends AppCompatActivity {
                         "      <td style=\"padding: 7px 10px 4px 10px;background: #f5f5f5;\">\n" +
                         "           <div style=\"display:inline-block\"> \n" +
                         "        <div style=\"display:block;width:150px;font-weight:700;\">Patient Name </div>\n" +
-                        "        <div class=\"content\" style=\"display:block\">"+""+customerName+"</div>\n" +
+                        "        <div class=\"content\" style=\"display:block\">" + "" + customerName + "</div>\n" +
                         "          </div>\n" +
                         "     \n" +
                         "    </tr>\n" +
@@ -293,7 +314,7 @@ public class FinishActivity extends AppCompatActivity {
                         "        <td style=\"padding: 7px 10px 4px 10px;background: #fff;\">\n" +
                         "             <div style=\"display:inline-block\"> \n" +
                         "    <div style=\"display:block;width:150px;font-weight:700;\">Patient Email Id </div>\n" +
-                        "        <div class=\"content\" style=\"display:block\">"+""+customerEmailId+"</div>\n" +
+                        "        <div class=\"content\" style=\"display:block\">" + "" + customerEmailId + "</div>\n" +
                         "          </div>\n" +
                         "      </td>\n" +
                         "\n" +
@@ -301,8 +322,8 @@ public class FinishActivity extends AppCompatActivity {
                         "    <tr>\n" +
                         "      <td style=\"padding: 7px 10px 4px 10px;background: #f5f5f5;\">\n" +
                         "    <div style=\"display:inline-block\"> \n" +
-                        "        <div style=\"display:block;font-weight:700;\">Requested Appointment Date and Time </div>\n" +
-                        "        <div class=\"content\" style=\"display:block\">"+""+customerAppointmentDateTime+"</div>\n" +
+                        "        <div style=\"display:block;font-weight:700;\"> Message </div>\n" +
+                        "        <div class=\"content\" style=\"display:block\">" + "" + msg + "</div>\n" +
                         "          </div>\n" +
                         "        </td>\n" +
                         "\n" +
@@ -315,23 +336,19 @@ public class FinishActivity extends AppCompatActivity {
                         "</html>";
 
 
-
                 //  messageTxt= template + mUserPwd;
                 String email = mApi[0];
 
                 // Add subject, Body, your mail Id, and receiver mail Id.
-                if(mSender!=null)
-                mSender.sendMail(getResources().getString(R.string.email_subject), htmlCode, mSenderEmail,email );
+                if (mSender != null)
+                    mSender.sendMail(getResources().getString(R.string.email_subject), htmlCode, mSenderEmail, email);
 //sender emailid and receviver emailid
-                else
-                {
-                    Log.d("TAG","EmailId is Null");
+                else {
+                    Log.d("TAG", "EmailId is Null");
                 }
 
-            }
-
-            catch (Exception ex) {
-                Log.d("TAG","Email sending exception");
+            } catch (Exception ex) {
+                Log.d("TAG", "Email sending exception");
             }
             return null;
         }
@@ -339,10 +356,10 @@ public class FinishActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            if(pDialog.isShowing())
-            pDialog.cancel();
-            Toast toast=Toast.makeText(getApplicationContext(), getResources().getString(R.string.set_appointment_msg), Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER,0,0);
+            if (pDialog.isShowing())
+                pDialog.cancel();
+            Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.set_appointment_msg), Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
             finish();
         }

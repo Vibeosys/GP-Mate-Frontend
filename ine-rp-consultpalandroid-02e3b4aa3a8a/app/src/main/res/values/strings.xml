@@ -19,7 +19,7 @@
     <string name="log_in_validation_invalid_practice_id">Please enter a valid Practice ID</string>
 
     <string name="welcome_practice_place_name">Welcome to %1$s</string>
-    <string name="welcome_consent_text">If you press CONTINUE you are consenting to share your information in accordance with the Consult Pal Terms and Conditions (comprising of End User License Agreement and Privacy Policy). If you do not wish to consent please press EXIT.\n\n Do not use this app in case of emergency or as a substitute for immediate medical assistance.</string>
+    <string name="welcome_consent_text">If you press CONTINUE you are consenting to share your information in accordance with the GP Mate Terms and Conditions (comprising of End User License Agreement and Privacy Policy). If you do not wish to consent please press EXIT.\n\n Do not use this app in case of emergency or as a substitute for immediate medical assistance.</string>
     <string name="welcome_continue_button">CONTINUE</string>
     <string name="welcome_exit_button">EXIT</string>
 
@@ -78,9 +78,9 @@
         Vestibulum sit amet massa eu diam volutpat sagittis.</string>
 
     <!--Exit screen message -->
-    <string name="exit_screen_message">Would you consider a telephone consultation, or video
-        consultation instead of your face-to-face</string>
-    <string name="exit_screen_choice">Please select your choice (Yes/No) </string>
+    <string name="exit_screen_message">Would you consider a telephone consultation,
+        or video consultation instead of your face-to-face, should your GP deem suitable?</string>
+    <string name="exit_screen_choice">Please select your choice</string>
     <string name="exit_screen_date">Date</string>
     <string name="exit_screen_time">Time</string>
     <string name="next_appointment_button">CONTACT ME</string>
@@ -99,7 +99,7 @@
     <!-- Select date for appointment -->
     <string name="prev_appoint_date_hint">Appointment Date</string>
     <string name="prev_appoint_time_hint">Appointment Time</string>
-    <string name="prev_appoint_is_taken">Have you had any previous appointment?</string>
+    <string name="prev_appoint_is_taken">When is your next appointment?</string>
     <string name="prev_appoint_message">Please take the appointment first and enter the details</string>
     <string name="prev_appoint_taken_message">Enter appointment date and time</string>
     <string name="prev_appoint_next">Next</string>
@@ -114,5 +114,6 @@
         inactive for last 2 minute</string>
     <string name="session_time_out">Session Time Out</string>
     <string name="session_time_out_msg">Your session is time out you can not chat further.</string>
+    <string name="msg_error_validation">Please Write us</string>
 </resources>
 

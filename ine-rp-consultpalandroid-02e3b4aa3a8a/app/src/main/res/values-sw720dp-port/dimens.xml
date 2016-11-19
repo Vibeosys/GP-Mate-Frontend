@@ -14,7 +14,7 @@
 
     <dimen name="session_top_picture_size">160dp</dimen>
     <dimen name="session_top_picture_vertical_margin">16dp</dimen>
-    <dimen name="session_top_text_size">26sp</dimen>
+    <dimen name="session_top_text_size">28sp</dimen>
     <dimen name="session_bottom_buttons_text_size">28sp</dimen>
 
     <dimen name="symptom_box_height">150dp</dimen>
