@@ -115,5 +115,6 @@
     <string name="session_time_out">Session Time Out</string>
     <string name="session_time_out_msg">Your session is time out you can not chat further.</string>
     <string name="msg_error_validation">Please Write us</string>
+    <string name="finish_msg">When do you prefer consultation?</string>
 </resources>
 

@@ -117,6 +117,9 @@ public class FinishActivity extends AppCompatActivity {
 
     @OnClick(R.id.finish_exit_button)
     public void onClickFinishButton() {
+        Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.set_appointment_msg), Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
         this.finish();
     }
 
