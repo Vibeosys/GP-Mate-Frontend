@@ -50,22 +50,12 @@ public class FinishActivity extends AppCompatActivity {
 
     @Bind(R.id.finish_picture)
     ImageView picture;
-    /* @Bind(R.id.email_notification_choice)
-     Switch userNotification;*/
-    /*@Bind(R.id.select_date)
-    TextView selectDate;
-    @Bind(R.id.select_time)
-    TextView selectTime;*/
     @Bind(R.id.next_appointment_button)
     TextView nextAppointment;
     @Bind(R.id.next_appointment_bottom_layout)
     LinearLayout selectNextAppointment;
     @Bind(R.id.finish_exit_button)
     TextView finishButton;
-    /*@Bind(R.id.date_underline)
-    View dateUnderline;
-    @Bind(R.id.time_underline)
-    View timeUnderline;*/
     @Bind(R.id.txt_msg_layout)
     LinearLayout layoutMsg;
     @Bind(R.id.email_msg)
@@ -89,7 +79,7 @@ public class FinishActivity extends AppCompatActivity {
             if (Patterns.EMAIL_ADDRESS.matcher(emailIdId).matches()) {
                 mReceiverEmailId = emailIdId;
                 mSenderEmail = "gpmateapp@gmail.com";
-                mSenderPassword = "dummyPassword";
+                mSenderPassword = "PsychC0mms";
                 //mReceiverEmailId= "@vibe.com";
                 mSender = new GMailSender(mSenderEmail, mSenderPassword);
             }
@@ -123,55 +113,6 @@ public class FinishActivity extends AppCompatActivity {
         this.finish();
     }
 
-    /*Switch button event and visibility set for button*/
-  /*  @OnCheckedChanged(R.id.email_notification_choice)
-    public void onClickSwitchButton(boolean checked) {
-        if (checked) {
-            selectNextAppointment.setVisibility(View.VISIBLE);
-            finishButton.setVisibility(View.GONE);
-
-        } else if (checked == false) {
-            selectNextAppointment.setVisibility(View.GONE);
-            finishButton.setVisibility(View.VISIBLE);
-        }
-
-
-    }*/
-
-   /* *//*Text View Select Date event*//*
-    @OnClick(R.id.select_date)
-    public void onSelectDate() {
-        new DatePickerDialog(this, date, mCalendar
-                .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
-                mCalendar.get(Calendar.DAY_OF_MONTH)).show();
-
-    }*/
-
-    /*Text View Select Time event*/
-   /* @OnClick(R.id.select_time)
-    public void onSelectTime() {
-        mCalendar = Calendar.getInstance();
-        int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
-        int minute = mCalendar.get(Calendar.MINUTE);
-        TimePickerDialog mTimePicker;
-        mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                if (selectedHour > 12) {
-                    int timeIn12 = selectedHour - 12;
-                    selectTime.setText(timeIn12 + ":" + selectedMinute + " PM");
-                    selectTime.setHint("Time Selected");
-                } else {
-                    selectTime.setText(selectedHour + ":" + selectedMinute + " AM");
-                    selectTime.setHint("Time Selected");
-                }
-            }
-        }, hour, minute, false);//Yes 24 hour time
-        mTimePicker.setTitle("Select Time");
-        mTimePicker.show();
-
-    }*/
-
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -198,14 +139,6 @@ public class FinishActivity extends AppCompatActivity {
     /*Fix Appointment Button Click Event*/
     @OnClick(R.id.next_appointment_button)
     public void nextAppointmentButton() {
-        /*To check whether user have selected next appointment Date or not*/
-      /*  if (txtMsg.getHint().toString().equals(getResources().getString(R.string.exit_screen_date))) {
-            showErrorDialog(getString(R.string.date_validation_message));
-        }
-        *//*To check whether user have selected next appointment Time or not*//*
-        else if (selectTime.getHint().toString().equals(getResources().getString(R.string.exit_screen_time))) {
-            showErrorDialog(getString(R.string.time_validation_message));
-        }*/
         msg = txtMsg.getText().toString();
         if (TextUtils.isEmpty(msg)) {
             showErrorDialog(getString(R.string.msg_error_validation));
@@ -225,26 +158,6 @@ public class FinishActivity extends AppCompatActivity {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
-   /* *//*Function for Date Picker*//*
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            // TODO Auto-generated method stub
-            mCalendar.set(Calendar.YEAR, year);
-            mCalendar.set(Calendar.MONTH, monthOfYear);
-            mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            showDateOnTextView();
-        }
-    };*/
-
-   /* *//*Show Date on TextView*//*
-    private void showDateOnTextView() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-        selectDate.setText(sdf.format(mCalendar.getTime()));
-        selectDate.setHint(getResources().getString(R.string.select_date_hint));
-    }*/
 
     /*Error message dialog*/
     public void showErrorDialog(String message) {
