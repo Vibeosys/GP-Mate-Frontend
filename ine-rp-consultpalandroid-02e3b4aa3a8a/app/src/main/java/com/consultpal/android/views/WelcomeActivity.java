@@ -106,7 +106,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", null);
                 builder.show();
             }
-        }, 138, 164, 0);
+        }, 134, 160, 0);
         ssb.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
@@ -127,7 +127,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", null);
                 builder.show();
             }
-        }, 169, 183, 0);
+        }, 165, 179, 0);
 
         welcomeConsentTV.setText(ssb, TextView.BufferType.SPANNABLE);
     }

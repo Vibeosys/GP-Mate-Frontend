@@ -79,7 +79,7 @@ public class FinishActivity extends AppCompatActivity {
             if (Patterns.EMAIL_ADDRESS.matcher(emailIdId).matches()) {
                 mReceiverEmailId = emailIdId;
                 mSenderEmail = "gpmateapp@gmail.com";
-                mSenderPassword = "PsychC0mms";
+                mSenderPassword = "dummy";
                 //mReceiverEmailId= "@vibe.com";
                 mSender = new GMailSender(mSenderEmail, mSenderPassword);
             }

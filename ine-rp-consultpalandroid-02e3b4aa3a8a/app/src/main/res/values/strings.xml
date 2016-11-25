@@ -109,12 +109,11 @@
 
 
     <!-- Session screen -->
-    <string name="time_interval_dialog_title">Time is Running</string>
-    <string name="time_interval_dialog_msg">You want to continue with the application? You are
-        inactive for last 2 minute</string>
+    <string name="time_interval_dialog_title">Time is running out</string>
+    <string name="time_interval_dialog_msg">Do you want to continue?</string>
     <string name="session_time_out">Session Time Out</string>
     <string name="session_time_out_msg">Your session is time out you can not chat further.</string>
     <string name="msg_error_validation">Please Write us</string>
-    <string name="finish_msg">When do you prefer consultation?</string>
+    <string name="finish_msg">When is best to contact you?</string>
 </resources>
 
