@@ -82,7 +82,7 @@ public class SessionPresenter {
 
         switch (notificationType) {
             case ALLOCATION:
-                sessionView.onAllocation(notification.getDoctorId(), firstName + surname,
+                sessionView.onAllocation(notification.getDoctorId(), firstName , surname,
                         notification.getDoctorPicture(), notification.getDoctorDescription());
                 break;
             case MESSAGE:

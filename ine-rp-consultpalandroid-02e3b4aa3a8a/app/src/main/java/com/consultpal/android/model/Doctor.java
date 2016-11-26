@@ -28,8 +28,10 @@ public class Doctor implements Serializable {
     @SerializedName("practiceLogged")
     private PracticeLogged practiceLogged;
 
-    public Doctor(String name, String description, ImageProfile imageProfile, String imageProfileUrl) {
+    public Doctor(long id, String name, String lastName, String description, ImageProfile imageProfile, String imageProfileUrl) {
+        this.id = id;
         this.name = name;
+        this.lastName = lastName;
         this.description = description;
         this.imageProfile = imageProfile;
         this.imageProfileUrl = imageProfileUrl;

@@ -29,7 +29,7 @@
             android:padding="1dp"
             android:scaleType="centerCrop" />
 
-        <TextView
+        <com.consultpal.android.utils.Typewriter
             android:id="@+id/session_top_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

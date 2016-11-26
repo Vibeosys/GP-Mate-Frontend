@@ -8,14 +8,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Rect;
-import android.nfc.Tag;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -27,7 +26,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.consultpal.android.ConsultPalApp;
 import com.consultpal.android.R;
@@ -36,23 +34,21 @@ import com.consultpal.android.adapters.SymptomsRVAdapter;
 import com.consultpal.android.listeners.OnStartDragListener;
 import com.consultpal.android.model.Doctor;
 import com.consultpal.android.model.Message;
-import com.consultpal.android.model.PracticeLogged;
 import com.consultpal.android.model.Symptom;
 import com.consultpal.android.model.rest.Session;
 import com.consultpal.android.presenters.SessionPresenter;
 import com.consultpal.android.services.CountdownService;
 import com.consultpal.android.utils.Constants;
-import com.consultpal.android.utils.DateUtils;
 import com.consultpal.android.utils.SharedPrefManager;
 import com.consultpal.android.utils.SimpleItemTouchHelperCallback;
 import com.consultpal.android.utils.SymptomListDividerDecorator;
+import com.consultpal.android.utils.Typewriter;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -68,7 +64,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     @Bind(R.id.session_practice_picture)
     ImageView practiceImageView;
     @Bind(R.id.session_top_message)
-    TextView topMessageTV;
+    Typewriter topMessageTV;
     @Bind(R.id.session_countdown)
     TextView countdownTV;
     @Bind(R.id.session_new_message)
@@ -116,7 +112,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
         }
         showInfoDialog();
-        setTopLayout();
+
 
         boolean isTablet = getResources().getBoolean(R.bool.is_tab);
         if (isTablet) {
@@ -222,6 +218,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     }
 
     private void setTopLayout() {
+        topMessageTV.setCharacterDelay(100);
         if (session != null) {
             if (session.getPracticePlace() != null) {
                 setPracticeImageView(Constants.BASE_ENDPOINT_PICTURES + session.getPracticePlace().getImageProfileUrl());
@@ -230,9 +227,9 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
             // If session has no doctor, custom practice message is set in xml
             if (session.getDoctor() != null) {
                 if (!TextUtils.isEmpty(session.getDoctor().getDescription())) {
-                    topMessageTV.setText(session.getDoctor().getDescription());
+                    topMessageTV.animateText(session.getDoctor().getDescription());
                 } else {
-                    topMessageTV.setText(getString(R.string.session_top_message_doctor, session.getDoctor().getName()));
+                    topMessageTV.animateText(getString(R.string.session_top_message_doctor, session.getDoctor().getName() + " " + session.getDoctor().getLastName()));
                 }
                 // If doctor has picture, update imageview
                 if (!TextUtils.isEmpty(session.getDoctor().getImageProfileUrl())) {
@@ -439,12 +436,12 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         return false;
     }
 
-    public void onAllocation(final long doctorId, final String doctorName, final String doctorPicture,
+    public void onAllocation(final long doctorId, final String doctorName, final String lastName, final String doctorPicture,
                              final String doctorDescription) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                updateDoctor(doctorId, doctorName, doctorPicture, doctorDescription);
+                updateDoctor(doctorId, doctorName, lastName, doctorPicture, doctorDescription);
             }
         });
     }
@@ -455,9 +452,9 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
             public void run() {
                 if (session.getPracticePlace() != null) {
                     if (!TextUtils.isEmpty(session.getPracticePlace().getDescription())) {
-                        topMessageTV.setText(session.getPracticePlace().getDescription());
+                        topMessageTV.animateText(session.getPracticePlace().getDescription());
                     } else {
-                        topMessageTV.setText(getString(R.string.session_top_message_doctor, session.getPracticePlace().getPracticeId()));
+                        topMessageTV.animateText(getString(R.string.session_top_message_doctor, session.getPracticePlace().getPracticeId()));
                     }
                     // If doctor has picture, update imageview
                     if (!TextUtils.isEmpty(session.getDoctor().getImageProfileUrl())) {
@@ -488,8 +485,8 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         });
     }
 
-    private void updateDoctor(long doctorId, String doctorName, String doctorPicture, String doctorDescription) {
-        Doctor doctor = new Doctor(doctorName, doctorDescription, null, doctorPicture);
+    private void updateDoctor(long doctorId, String doctorName, String lastName, String doctorPicture, String doctorDescription) {
+        Doctor doctor = new Doctor(doctorId, doctorName, lastName, doctorDescription, null, doctorPicture);
         session.setDoctor(doctor);
         setTopLayout();
     }
@@ -598,6 +595,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
             @Override
             public void onClick(View v) {
                 infoDialog.dismiss();
+                setTopLayout();
             }
         });
 
