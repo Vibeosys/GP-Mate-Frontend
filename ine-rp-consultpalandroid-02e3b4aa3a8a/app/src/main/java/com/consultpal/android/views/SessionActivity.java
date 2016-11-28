@@ -84,8 +84,6 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     private Tracker mTracker;
     private long startTime = 2 * 60 * 1000; // 2 MINS IDLE TIME
     private final long interval = 1 * 1000;
-    private String onlyDate="";
-    private String onlyTime="";
 
     CountDownTimer cdtInterval;
     private SharedPrefManager sharedPrefManager;
@@ -112,8 +110,6 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
 
         if (getIntent() != null && getIntent().hasExtra(Constants.LOG_IN_EXTRA_SESSION)) {
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
-            onlyDate= getIntent().getExtras().getString(Constants.APPOINTMENT_DATE);
-            onlyTime = getIntent().getExtras().getString(Constants.APPOINTMENT_TIME);
         }
         showInfoDialog();
 
@@ -211,10 +207,6 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         for (int i = 1; i <= mMaxNoOfBox / 2; i++) {
             symptomsList.add(new Symptom(null, i));
         }
-
-       /* symptomsList.add(new Symptom(null, 2));
-        symptomsList.add(new Symptom(null, 3));
-        symptomsList.add(new Symptom(null, 4));*/
     }
 
     public void addSymptomToDelete(Symptom symptomToDelete) {
@@ -349,8 +341,6 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     private void openFinishActivity() {
         Intent intent = new Intent(SessionActivity.this, FinishActivity.class);
         intent.putExtra(Constants.LOG_IN_EXTRA_SESSION, session);
-        intent.putExtra(Constants.APPOINTMENT_DATE,onlyDate);
-        intent.putExtra(Constants.APPOINTMENT_TIME,onlyTime);
         startActivity(intent);
         this.finish();
     }
@@ -557,9 +547,6 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
                 showErrorDialog(getResources().getString(R.string.time_interval_dialog_title),
                         getResources().getString(R.string.time_interval_dialog_msg));
             }
-
-           /* Toast.makeText(getApplicationContext(), "2 mins you dont have any updates",
-                    Toast.LENGTH_LONG).show();*/
         }
 
         @Override

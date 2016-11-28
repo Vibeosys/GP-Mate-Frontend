@@ -72,8 +72,6 @@ public class LogInActivity extends AppCompatActivity implements AdapterView.OnIt
     private DoctorSpinnerAdapter doctorSpinnerAdapter;
     private long appointmentDate;
     private long selectedDoctorId = 0;
-    private String onlyDate="";
-    private String onlyTime="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +83,6 @@ public class LogInActivity extends AppCompatActivity implements AdapterView.OnIt
         // bind to presenter
         presenter = new LogInPresenter(this);
         appointmentDate = getIntent().getExtras().getLong(Constants.APPOINTMENT_DATE_TIME);
-        onlyDate= getIntent().getExtras().getString(Constants.APPOINTMENT_DATE);
-        onlyTime = getIntent().getExtras().getString(Constants.APPOINTMENT_TIME);
-
-
         practiceIdsAdapter = new ArrayAdapter<>(LogInActivity.this, android.R.layout.select_dialog_item, practiceIdsList);
         practiceIdAutocomplete.setThreshold(2);
         practiceIdAutocomplete.setAdapter(practiceIdsAdapter);
@@ -250,8 +244,7 @@ public class LogInActivity extends AppCompatActivity implements AdapterView.OnIt
         Intent intent = new Intent(LogInActivity.this, WelcomeActivity.class);
         intent.putExtra(Constants.LOG_IN_EXTRA_SESSION, session);
         intent.putExtra(Constants.DOCTOR_ID, selectedDoctorId);
-        intent.putExtra(Constants.APPOINTMENT_DATE,onlyDate);
-        intent.putExtra(Constants.APPOINTMENT_TIME,onlyTime);
+        intent.putExtra(Constants.APPOINTMENT_DATE_TIME, appointmentDate);
         startActivity(intent);
         this.finish();
     }

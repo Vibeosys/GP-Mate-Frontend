@@ -52,11 +52,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private WelcomePresenter presenter;
     private Session session;
-
+    private long appointmentDate;
     private Tracker mTracker;
     private long selectedDoctorId = 0;
-    private String onlyDate="";
-    private String onlyTime="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +67,7 @@ public class WelcomeActivity extends AppCompatActivity {
         if (getIntent() != null && getIntent().hasExtra(Constants.LOG_IN_EXTRA_SESSION)) {
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
             selectedDoctorId = getIntent().getExtras().getLong(Constants.DOCTOR_ID);
-            onlyDate= getIntent().getExtras().getString(Constants.APPOINTMENT_DATE);
-            onlyTime = getIntent().getExtras().getString(Constants.APPOINTMENT_TIME);
+            appointmentDate = getIntent().getExtras().getLong(Constants.APPOINTMENT_DATE_TIME);
         }
         presenter.getConfig(session.getPracticePlace().getPracticeId());
         if (session != null && session.getPracticePlace() != null) {
@@ -167,10 +165,9 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void openSessionActivity(Session session) {
+        session.setAppointmentDate(appointmentDate);
         Intent intent = new Intent(WelcomeActivity.this, SessionActivity.class);
         intent.putExtra(Constants.LOG_IN_EXTRA_SESSION, session);
-        intent.putExtra(Constants.APPOINTMENT_DATE,onlyDate);
-        intent.putExtra(Constants.APPOINTMENT_TIME,onlyTime);
         startActivity(intent);
         this.finish();
     }

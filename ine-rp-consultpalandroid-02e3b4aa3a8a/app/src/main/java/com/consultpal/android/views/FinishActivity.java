@@ -67,8 +67,6 @@ public class FinishActivity extends AppCompatActivity {
     private Calendar mCalendar;
     private String mSenderEmail, mSenderPassword, mReceiverEmailId, msg;
     GMailSender mSender;
-    private String onlyDate="";
-    private String onlyTime="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +88,6 @@ public class FinishActivity extends AppCompatActivity {
         }
         if (getIntent() != null && getIntent().hasExtra(Constants.LOG_IN_EXTRA_SESSION)) {
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
-            onlyTime = getIntent().getExtras().getString(Constants.APPOINTMENT_TIME);
-            onlyDate= getIntent().getExtras().getString(Constants.APPOINTMENT_DATE);
-
         }
 
         // If doctor has picture show doctor's, otherwise show practice place image. If both are empty show nothing
@@ -182,17 +177,12 @@ public class FinishActivity extends AppCompatActivity {
         Patient mPatient = session.getPatient();
         String customerName = mPatient.getName() + "\t" + mPatient.getLastName();
         String customerEmailId = mPatient.getEmail();
-      //  long previousDateTime1= session.getFinishDate();
-     //   long previousDateTime2= session.getStartDate();
-        long previousDateTime3= session.getAppointmentDate();
-      //  long previousDateTime= session.getFinishDate();
+
         long customerDateOfBirth = mPatient.getDateOfBirth();
         DateUtils dateUtils = new DateUtils();
         String strDateOfBirth = dateUtils.longDateToString(customerDateOfBirth);
-        String strPreviousDate = dateUtils.longDateToString(previousDateTime3);
         String bestToContactYou = txtMsg.getText().toString();
-
-        // String customerAppointmentDateTime = selectDate.getText() + " " + selectTime.getText();
+        String appointmentDate = dateUtils.longDateTimeToString(session.getAppointmentDate());
 
         @Override
         protected void onPreExecute() {
@@ -249,7 +239,7 @@ public class FinishActivity extends AppCompatActivity {
                         "<td style=\"padding: 7px 10px 0px 10px;\">\n" +
                         "<div style=\"display:inline-block;height: 32px;\">\n" +
                         "<div style=\"display:inline-block;font-weight: 700;display:inline;\">Previous Appt. Details - </div>\n" +
-                        "<div class=\"content\" style=\"display:inline-block\">" + ""+onlyDate +"\t"+""+onlyTime+ "</div>\n" +
+                        "<div class=\"content\" style=\"display:inline-block\">" + "" + appointmentDate + "</div>\n" +
                         "</div>\n" +
                         "</td>\n" +
 

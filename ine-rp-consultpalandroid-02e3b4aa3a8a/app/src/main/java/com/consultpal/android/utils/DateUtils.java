@@ -46,4 +46,9 @@ public class DateUtils {
         return 0;
     }
 
+    public static String longDateTimeToString(long date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        return sdf.format(date);
+    }
+
 }
