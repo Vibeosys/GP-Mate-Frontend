@@ -94,6 +94,8 @@ public class SelectPrevAppointment extends AppCompatActivity {
             long dateTimeLong = DateUtils.stringDateTimeToLong(strDate + " " + strTime);
             Intent intent = new Intent(SelectPrevAppointment.this, LogInActivity.class);
             intent.putExtra(Constants.APPOINTMENT_DATE_TIME, dateTimeLong);
+            intent.putExtra(Constants.APPOINTMENT_DATE,strDate);
+            intent.putExtra(Constants.APPOINTMENT_TIME,strTime);
             startActivity(intent);
             this.finish();
         } else {

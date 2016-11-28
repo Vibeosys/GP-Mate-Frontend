@@ -29,6 +29,7 @@ import com.consultpal.android.R;
 import com.consultpal.android.model.Patient;
 import com.consultpal.android.model.rest.Session;
 import com.consultpal.android.utils.Constants;
+import com.consultpal.android.utils.DateUtils;
 import com.consultpal.android.utils.GMailSender;
 import com.consultpal.android.utils.SharedPrefManager;
 import com.google.android.gms.analytics.HitBuilders;
@@ -66,6 +67,8 @@ public class FinishActivity extends AppCompatActivity {
     private Calendar mCalendar;
     private String mSenderEmail, mSenderPassword, mReceiverEmailId, msg;
     GMailSender mSender;
+    private String onlyDate="";
+    private String onlyTime="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +82,17 @@ public class FinishActivity extends AppCompatActivity {
             if (Patterns.EMAIL_ADDRESS.matcher(emailIdId).matches()) {
                 mReceiverEmailId = emailIdId;
                 mSenderEmail = "gpmateapp@gmail.com";
-                mSenderPassword = "dummy";
-                //mReceiverEmailId= "@vibe.com";
+                mSenderPassword = "DummyPassword";
+
                 mSender = new GMailSender(mSenderEmail, mSenderPassword);
             }
 
         }
         if (getIntent() != null && getIntent().hasExtra(Constants.LOG_IN_EXTRA_SESSION)) {
             session = (Session) getIntent().getSerializableExtra(Constants.LOG_IN_EXTRA_SESSION);
+            onlyTime = getIntent().getExtras().getString(Constants.APPOINTMENT_TIME);
+            onlyDate= getIntent().getExtras().getString(Constants.APPOINTMENT_DATE);
+
         }
 
         // If doctor has picture show doctor's, otherwise show practice place image. If both are empty show nothing
@@ -176,6 +182,15 @@ public class FinishActivity extends AppCompatActivity {
         Patient mPatient = session.getPatient();
         String customerName = mPatient.getName() + "\t" + mPatient.getLastName();
         String customerEmailId = mPatient.getEmail();
+      //  long previousDateTime1= session.getFinishDate();
+     //   long previousDateTime2= session.getStartDate();
+        long previousDateTime3= session.getAppointmentDate();
+      //  long previousDateTime= session.getFinishDate();
+        long customerDateOfBirth = mPatient.getDateOfBirth();
+        DateUtils dateUtils = new DateUtils();
+        String strDateOfBirth = dateUtils.longDateToString(customerDateOfBirth);
+        String strPreviousDate = dateUtils.longDateToString(previousDateTime3);
+        String bestToContactYou = txtMsg.getText().toString();
 
         // String customerAppointmentDateTime = selectDate.getText() + " " + selectTime.getText();
 
@@ -199,55 +214,58 @@ public class FinishActivity extends AppCompatActivity {
 
                 String htmlCode = "<html>\n" +
                         "<head>\n" +
-                        "<style> \n" +
-                        "   \n" +
-                        "        .content{\n" +
-                        "            height: 40px;\n" +
-                        "    }\n" +
                         "</style>\n" +
                         "</head>\n" +
                         "<body>\n" +
-                        "<table class=\"table\" style=\"border: 2px solid #b9b6b6;padding: 0px 0px 0px 0px;text-align: left; width:100%;\">\n" +
-                        "  <thead style=\"background: #E41118;\">\n" +
-                        "    <tr>\n" +
-                        "      <th style=\"padding: 10px 10px 10px 10px;color:#fff;\">\n" +
-                        "          <div> GP Mate Application - Patient Information</div>\n" +
-                        "         </th>\n" +
-                        "    </tr>\n" +
-                        "     \n" +
-                        "  </thead>\n" +
-                        "  <tbody>\n" +
-                        "    <tr>\n" +
-                        "     \n" +
-                        "      <td style=\"padding: 7px 10px 4px 10px;background: #f5f5f5;\">\n" +
-                        "           <div style=\"display:inline-block\"> \n" +
-                        "        <div style=\"display:block;width:150px;font-weight:700;\">Patient Name </div>\n" +
-                        "        <div class=\"content\" style=\"display:block\">" + "" + customerName + "</div>\n" +
-                        "          </div>\n" +
-                        "     \n" +
-                        "    </tr>\n" +
-                        "    <tr>\n" +
-                        "        <td style=\"padding: 7px 10px 4px 10px;background: #fff;\">\n" +
-                        "             <div style=\"display:inline-block\"> \n" +
-                        "    <div style=\"display:block;width:150px;font-weight:700;\">Patient Email Id </div>\n" +
-                        "        <div class=\"content\" style=\"display:block\">" + "" + customerEmailId + "</div>\n" +
-                        "          </div>\n" +
-                        "      </td>\n" +
-                        "\n" +
-                        "    </tr>\n" +
-                        "    <tr>\n" +
-                        "      <td style=\"padding: 7px 10px 4px 10px;background: #f5f5f5;\">\n" +
-                        "    <div style=\"display:inline-block\"> \n" +
-                        "        <div style=\"display:block;font-weight:700;\"> Message </div>\n" +
-                        "        <div class=\"content\" style=\"display:block\">" + "" + msg + "</div>\n" +
-                        "          </div>\n" +
-                        "        </td>\n" +
-                        "\n" +
-                        "    </tr>\n" +
-                        "      \n" +
-                        "  </tbody>\n" +
+                        "<table class=\"table\" border=1 bordercolor=\"#e41118\" style=\"border: 1px solid #e41118;padding: 0px 0px 0px 0px;text-align: left; width:100%;border-spacing: 0;border-color:#e41118\">\n" +
+                        "<thead style=\"background: #E41118;\">\n" +
+                        "<tr>\n" +
+                        "<th style=\"padding: 10px 10px 10px 10px;color:#fff;\">\n" +
+                        "<div style=\"text-align:center\"> GP-Mate App Alternative Appointment Request</div>\n" +
+                        "</th>\n" +
+                        "</tr>\n" +
+
+                        "</thead>\n" +
+                        "<tbody>\n" +
+                        "<tr>\n" +
+
+                        "<td style=\"padding: 7px 10px 0px 10px;\">\n" +
+                        "<div style=\"display:inline-block;height: 32px;\">\n" +
+                        "<div style=\"display:inline-block; font-weight: 700;display:inline\">Patient Name -</div>\n" +
+                        "<div class=\"content\" style=\"display:inline-block\">" + "" + customerName + " </div>\n" +
+                        "</div>\n" +
+
+                        "</tr>\n" +
+                        "<tr>\n" +
+                        "<td style=\"padding: 7px 10px 0px 10px;\">\n" +
+                        "<div style=\"display:inline-block;height: 32px;\">\n" +
+                        "<div style=\"display:inline-block;font-weight: 700;display:inline\">Date of Birth - </div>\n" +
+                        "<div class=\"content\" style=\"display:inline-block\">" + "" + strDateOfBirth + "</div>\n" +
+                        "</div>\n" +
+                        "</td>\n" +
+
+                        "</tr>\n" +
+                        "<tr>\n" +
+                        "<td style=\"padding: 7px 10px 0px 10px;\">\n" +
+                        "<div style=\"display:inline-block;height: 32px;\">\n" +
+                        "<div style=\"display:inline-block;font-weight: 700;display:inline;\">Previous Appt. Details - </div>\n" +
+                        "<div class=\"content\" style=\"display:inline-block\">" + ""+onlyDate +"\t"+""+onlyTime+ "</div>\n" +
+                        "</div>\n" +
+                        "</td>\n" +
+
+                        "</tr>\n" +
+                        "<tr>\n" +
+                        "<td style=\"padding: 7px 10px 0px 10px;\">\n" +
+                        "<div style=\"display:inline-block;height: 32px;\">\n" +
+                        "<div style=\"display:inline-block;font-weight: 700 ;display:inline;\">Please contact me on - </div>\n" +
+                        "<div class=\"content\" style=\"display:inline-block\">" + "" + customerEmailId + "," + "\t" + "message -" + bestToContactYou + "</div>\n" +
+                        "</div>\n" +
+                        "</td>\n" +
+
+                        "</tr>\n" +
+                        "</tbody>\n" +
                         "</table>\n" +
-                        "\n" +
+
                         "</body>\n" +
                         "</html>";
 
