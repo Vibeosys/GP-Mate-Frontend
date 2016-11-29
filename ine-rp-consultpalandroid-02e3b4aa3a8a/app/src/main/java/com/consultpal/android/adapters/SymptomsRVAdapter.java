@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -164,12 +163,6 @@ public class SymptomsRVAdapter extends RecyclerView.Adapter<SymptomsRVAdapter.Si
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-        String strFromText = mData.get(fromPosition).getDescription();
-        String strToText = mData.get(toPosition).getDescription();
-        if ((TextUtils.isEmpty(strFromText) || strFromText == null)
-                || (TextUtils.isEmpty(strToText) || strToText == null)) {
-            return false;
-        }
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
                 Collections.swap(mData, i, i + 1);
