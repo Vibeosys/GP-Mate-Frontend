@@ -80,7 +80,7 @@ public class FinishActivity extends AppCompatActivity {
             if (Patterns.EMAIL_ADDRESS.matcher(emailIdId).matches()) {
                 mReceiverEmailId = emailIdId;
                 mSenderEmail = "gpmateapp@gmail.com";
-                mSenderPassword = "DummyPassword";
+                mSenderPassword = "dummyPassword";
 
                 mSender = new GMailSender(mSenderEmail, mSenderPassword);
             }
@@ -219,37 +219,37 @@ public class FinishActivity extends AppCompatActivity {
                         "<tbody>\n" +
                         "<tr>\n" +
 
-                        "<td style=\"padding: 7px 10px 0px 10px;\">\n" +
-                        "<div style=\"display:inline-block;height: 32px;\">\n" +
+                        "<td style=\"padding:10px;\">\n" +
+
                         "<div style=\"display:inline-block; font-weight: 700;display:inline\">Patient Name -</div>\n" +
                         "<div class=\"content\" style=\"display:inline-block\">" + "" + customerName + " </div>\n" +
-                        "</div>\n" +
+
 
                         "</tr>\n" +
                         "<tr>\n" +
-                        "<td style=\"padding: 7px 10px 0px 10px;\">\n" +
-                        "<div style=\"display:inline-block;height: 32px;\">\n" +
+                        "<td style=\"padding: 10px;\">\n" +
+
                         "<div style=\"display:inline-block;font-weight: 700;display:inline\">Date of Birth - </div>\n" +
                         "<div class=\"content\" style=\"display:inline-block\">" + "" + strDateOfBirth + "</div>\n" +
-                        "</div>\n" +
+
                         "</td>\n" +
 
                         "</tr>\n" +
                         "<tr>\n" +
-                        "<td style=\"padding: 7px 10px 0px 10px;\">\n" +
-                        "<div style=\"display:inline-block;height: 32px;\">\n" +
+                        "<td style=\"padding: 10px ;\">\n" +
+
                         "<div style=\"display:inline-block;font-weight: 700;display:inline;\">Previous Appt. Details - </div>\n" +
                         "<div class=\"content\" style=\"display:inline-block\">" + "" + appointmentDate + "</div>\n" +
-                        "</div>\n" +
+
                         "</td>\n" +
 
                         "</tr>\n" +
                         "<tr>\n" +
-                        "<td style=\"padding: 7px 10px 0px 10px;\">\n" +
-                        "<div style=\"display:inline-block;height: 32px;\">\n" +
+                        "<td style=\"padding: 10px;\">\n" +
+
                         "<div style=\"display:inline-block;font-weight: 700 ;display:inline;\">Please contact me on - </div>\n" +
                         "<div class=\"content\" style=\"display:inline-block\">" + "" + customerEmailId + "," + "\t" + "message -" + bestToContactYou + "</div>\n" +
-                        "</div>\n" +
+
                         "</td>\n" +
 
                         "</tr>\n" +
