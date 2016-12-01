@@ -204,7 +204,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     }
 
     private void addInitialBoxes() {
-        for (int i = 1; i <= mMaxNoOfBox; i++) {
+        for (int i = 1; i <= mMaxNoOfBox / 2; i++) {
             symptomsList.add(new Symptom(null, i));
         }
     }
