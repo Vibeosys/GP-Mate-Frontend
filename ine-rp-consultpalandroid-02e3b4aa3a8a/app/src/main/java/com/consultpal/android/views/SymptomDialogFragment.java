@@ -38,14 +38,18 @@ import butterknife.OnClick;
  */
 public class SymptomDialogFragment extends AppCompatDialogFragment {
 
-    @Bind(R.id.symptom_edit_description) EditText descriptionET;
-    @Bind(R.id.symptom_question_1_answer) EditText answer1ET;
-    @Bind(R.id.symptom_question_2_answer) RadioGroup answer2RG;
-
+    @Bind(R.id.symptom_edit_description)
+    EditText descriptionET;
+    @Bind(R.id.symptom_question_1_answer)
+    EditText answer1ET;
+    @Bind(R.id.symptom_question_2_answer)
+    RadioGroup answer2RG;
+    private OkClickListener listener;
     private Symptom symptom;
     private int position;
     SessionActivity callingActivity;
     private Tracker mTracker;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,7 @@ public class SymptomDialogFragment extends AppCompatDialogFragment {
 
         callingActivity = (SessionActivity) getActivity();
         // Obtain the shared Tracker instance.
-        ConsultPalApp application = (ConsultPalApp)getActivity().getApplication();
+        ConsultPalApp application = (ConsultPalApp) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
         // request a window without the title
         setStyle(STYLE_NO_TITLE, 0);
@@ -86,12 +90,10 @@ public class SymptomDialogFragment extends AppCompatDialogFragment {
     }
 
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onStart();
         Dialog dialog = getDialog();
-        if (dialog != null)
-        {
+        if (dialog != null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.WRAP_CONTENT;
             dialog.getWindow().setLayout(width, height);
@@ -116,15 +118,18 @@ public class SymptomDialogFragment extends AppCompatDialogFragment {
                 setAction(descriptionET.getText().toString()).
                 setLabel(descriptionET.getText().toString()).
                 setValue(1).build());
-        Log.d("TAG",mTracker.toString());
+        Log.d("TAG", mTracker.toString());
 
         if (answer2RG.getCheckedRadioButtonId() == R.id.symptom_question_2_positive) {
             symptom.setAnswer2(true);
-        } else if (answer2RG.getCheckedRadioButtonId() == R.id.symptom_question_2_negative){
+        } else if (answer2RG.getCheckedRadioButtonId() == R.id.symptom_question_2_negative) {
             symptom.setAnswer2(false);
         }
 
         callingActivity.updateEditedSymptom(symptom, position);
+        if (listener != null) {
+            listener.OnOkClick();
+        }
         this.dismiss();
     }
 
@@ -146,4 +151,11 @@ public class SymptomDialogFragment extends AppCompatDialogFragment {
         this.dismiss();
     }*/
 
+    public void setOkClickListener(OkClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OkClickListener {
+        public void OnOkClick();
+    }
 }

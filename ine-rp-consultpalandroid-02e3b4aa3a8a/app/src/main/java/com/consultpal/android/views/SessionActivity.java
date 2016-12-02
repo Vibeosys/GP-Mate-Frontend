@@ -56,7 +56,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SessionActivity extends AppCompatActivity implements OnStartDragListener {
+public class SessionActivity extends AppCompatActivity implements OnStartDragListener, SymptomDialogFragment.OkClickListener {
 
     private static final String TAG = SessionActivity.class.getSimpleName();
     @Bind(R.id.session_symptoms_recycler_view)
@@ -349,6 +349,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
     public void openSymptomDetail(Symptom symptom, int position) {
         FragmentManager fm = getSupportFragmentManager();
         SymptomDialogFragment symptomDialogFragment = new SymptomDialogFragment();
+        symptomDialogFragment.setOkClickListener(this);
         Bundle args = new Bundle();
         args.putParcelable(Constants.SYMPTOMS_EXTRA_DIALOG_SYMPTOM, symptom);
         args.putInt(Constants.SYMPTOMS_EXTRA_DIALOG_POSITION, position);
@@ -379,7 +380,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
                 updateGUI(intent);
             }
             if (intent.getExtras() != null && intent.getBooleanExtra(CountdownService.COUNTDOWN_UPDATE, false)) {
-                presenter.updateSession(session.getId(), session.getToken(), adapter.getItemsList(), symptomsToDelete);
+                //presenter.updateSession(session.getId(), session.getToken(), adapter.getItemsList(), symptomsToDelete);
             }
             if (intent.getExtras() != null && intent.getBooleanExtra(CountdownService.COUNTDOWN_FINISH, false)) {
                 presenter.updateBeforeFinish(session.getId(), session.getToken(),
@@ -392,7 +393,7 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getExtras() != null && intent.getBooleanExtra(CountdownService.COUNTDOWN_UPDATE, false)) {
-                presenter.updateSession(session.getId(), session.getToken(), adapter.getItemsList(), symptomsToDelete);
+                //presenter.updateSession(session.getId(), session.getToken(), adapter.getItemsList(), symptomsToDelete);
             }
         }
     };
@@ -530,6 +531,11 @@ public class SessionActivity extends AppCompatActivity implements OnStartDragLis
         } else {
             newMessageTV.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void OnOkClick() {
+        presenter.updateSession(session.getId(), session.getToken(), adapter.getItemsList(), symptomsToDelete);
     }
 
     public class MyCountDownTimer extends CountDownTimer {

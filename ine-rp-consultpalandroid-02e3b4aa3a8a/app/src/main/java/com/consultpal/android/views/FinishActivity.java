@@ -64,7 +64,6 @@ public class FinishActivity extends AppCompatActivity {
 
     private Session session;
     private Tracker mTracker;
-    private Calendar mCalendar;
     private String mSenderEmail, mSenderPassword, mReceiverEmailId, msg;
     GMailSender mSender;
 
@@ -73,7 +72,6 @@ public class FinishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish);
         ButterKnife.bind(this);
-        mCalendar = Calendar.getInstance();
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
         String emailIdId = sharedPrefManager.getGenericEmailId();
         if (!TextUtils.isEmpty(emailIdId)) {
